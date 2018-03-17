@@ -3,17 +3,18 @@ class Player():
     posX = posY = 0
     # size of the players bad
     sizeX = sizeY = 0
-    # max position bad can be in the y-axis
-    maxY = 0
+    # min and max position bad can be in the y-axis
+    minY = maxY = 0
     # points scored
     points = 0
     
-    def __init__(self, inX, inY, inSizeX, inSizeY, inMaxY):
+    def __init__(self, inX, inY, inSizeX, inSizeY, inMinY, inMaxY):
         self.posX = inX
         self.posY = inY
         self.sizeX = inSizeX
         self.sizeY = inSizeY
         self.maxY = inMaxY
+        self.minY = inMinY
         
     def getPosX(self):
         return self.posX
@@ -28,8 +29,20 @@ class Player():
         return self.sizeY
     
     def move(self, direction):
-        #TODO: make this safe
-        self.posY += direction
+        # check direction
+        if (direction > 0):
+            # going down
+            if (self.posY + direction < self.maxY):
+                self.posY += direction
+            else:
+                self.posY = self.maxY
+        else:
+            # going up
+            if (self.posY + direction > self.minY):
+                self.posY += direction
+            else:
+                self.posY = self.minY
+            
     
     def setPosY(self, inPosY):
         self.posY = inPosY

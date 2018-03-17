@@ -34,10 +34,10 @@ class GuiField(DisplayOnMonitor):
         while half_line_y < self.surfaceHeight:
             pygame.draw.rect(self.surfaceScreen, self.colorWhite, pygame.Rect(half_line_x, half_line_y, self.border_width, self.border_height))
             half_line_y += (self.border_height*2)
-                       
+            
     def fieldAddPlayer(self, posX, posY, sizeX, sizeY, points):
         # draw players bad
-        pygame.draw.rect(self.surfaceScreen, self.colorWhite, pygame.Rect((posX), (posY), sizeX, sizeY))
+        pygame.draw.rect(self.surfaceScreen, self.colorDebug, pygame.Rect((posX), (posY), sizeX, sizeY))
         # TODO: draw players score
         
     def fieldDisplay(self):
@@ -56,5 +56,15 @@ class GuiField(DisplayOnMonitor):
     
     def getBorderWidth(self):
         return self.border_width
+    
+    def getFieldStartY(self):
+        # Width of the black part of the field
+        fieldStartY = self.surfaceTop + self.border_width
+        return fieldStartY
+    
+    def getFieldEndY(self):
+        # Width of the black part of the field
+        fieldEndY = self.surfaceHeight - self.border_width
+        return fieldEndY
 
     
