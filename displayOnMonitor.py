@@ -1,4 +1,3 @@
-# command // print ("hello world %i" %(half_line_y)) // |FULLSCREEN
 import pygame
 from pygame.locals import *
 pygame.init()
@@ -8,8 +7,13 @@ class DisplayOnMonitor:
     monitorWidth = pygame.display.Info().current_w
     monitorHeight = pygame.display.Info().current_h
     # create monitor screen
+    # TODO: add |FULLSCREEN
     monitorScreen = pygame.display.set_mode((monitorWidth, monitorHeight),HWSURFACE|DOUBLEBUF )
-
+    
+    def __del__(self):
+        # close the display
+        pygame.display.quit()
+                
     # display the surface on the monitor
     def display(self, surface):
         # adjust the surface to the monitor size
