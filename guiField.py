@@ -27,7 +27,7 @@ class GuiField(DisplayOnMonitor):
         self.surfaceScreen.fill(self.colorBlack)
         
         # draw board border
-        pygame.draw.rect(self.surfaceScreen, self.colorWhite, pygame.Rect(0, self.surfaceTop, self.surfaceWidth, self.surfaceHeight-self.surfaceTop), self.border_width)
+        pygame.draw.rect(self.surfaceScreen, self.colorWhite, pygame.Rect(0, self.surfaceTop, self.surfaceWidth, self.surfaceHeight-self.surfaceTop), (self.border_width*2))
         # draw board half line
         half_line_x = self.surfaceWidth/2
         half_line_y = self.surfaceTop
@@ -58,13 +58,23 @@ class GuiField(DisplayOnMonitor):
         return self.border_width
     
     def getFieldStartY(self):
-        # Width of the black part of the field
+        # field y-axis start
         fieldStartY = self.surfaceTop + self.border_width
         return fieldStartY
     
     def getFieldEndY(self):
-        # Width of the black part of the field
+        # field y-axis end
         fieldEndY = self.surfaceHeight - self.border_width
         return fieldEndY
+    
+    def getFieldStartX(self):
+        # field x-axis start
+        fieldStartX = self.border_width
+        return fieldStartX
+    
+    def getFieldEndX(self):
+        # field x-axis end
+        fieldEndX = self.surfaceWidth - self.border_width
+        return fieldEndX
 
     
