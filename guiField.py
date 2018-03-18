@@ -15,7 +15,8 @@ class GuiField(DisplayOnMonitor):
     # colors
     colorWhite = (255, 255, 255)
     colorBlack = (0, 0, 0)
-    colorDebug = (155, 255, 0)
+    colorDebug1 = (155, 255, 0)
+    colorDebug2 = (0, 155, 255)
     
     # border
     border_width = 5
@@ -37,8 +38,12 @@ class GuiField(DisplayOnMonitor):
             
     def fieldAddPlayer(self, posX, posY, sizeX, sizeY, points):
         # draw players bad
-        pygame.draw.rect(self.surfaceScreen, self.colorDebug, pygame.Rect((posX), (posY), sizeX, sizeY))
+        pygame.draw.rect(self.surfaceScreen, self.colorDebug1, pygame.Rect((posX), (posY), sizeX, sizeY))
         # TODO: draw players score
+        
+    def fieldAddBall(self, posX, posY, size):
+        # draw ball
+        pygame.draw.rect(self.surfaceScreen, self.colorDebug2, pygame.Rect((posX), (posY), size, size))
         
     def fieldDisplay(self):
         # display the surface
