@@ -43,21 +43,22 @@ ball = Ball((guiField.getFieldWidth()/2), (guiField.getFieldHeight()/2), dirRigh
 player1WallX = guiField.getFieldStartX() + playerSizeX
 player2WallX = guiField.getFieldEndX()- playerSizeX
 
-
 def ballHitPlayerDirection(playerY, playerSize, ballY, ballSize):
     dir = dirNormal
     # check if ball is higher than palyer
     if ((ballY+ballSize) < playerY):
         dir = playerMissedBall
     # check if the middle of the ball hit upper part of the palyer
-    elif ((ballY+(ballSize/2) <= (playerY+(playerSize/3)))):
+    elif ((ballY+ballSize) <= (playerY+(playerSize/3))):
         dir = dirUp
-    # check if the middle of the ball hit lower part of the palyer
-    elif ((ballY+(ballSize/2) >= (playerY+(playerSize*2/3)))):
-        dir = dirDpwn
-    # check if ball is lower than palyer
+        
+    # check if ball is lower than player
     elif (ballY > (playerY+playerSize)):
         dir = playerMissedBall
+    # check if the middle of the ball hit lower part of the palyer
+    elif (ballY >= (playerY+(playerSize*2/3))):
+        dir = dirDown
+    
     #else dir is normal
     return dir    
 
@@ -83,7 +84,7 @@ def update_ball():
         
         #if(dirY_OrGameOver != playerMissedBall):
         # update ball dir and position
-        ball.updateDir(dirX, dirY)
+        ball.updateDir(dirX, dirY_OrGameOver)
         ball.updatePos()
         #else
         #check who won via dirX left or right  
