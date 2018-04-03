@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+
 pygame.init()
 
 class DisplayOnMonitor:
@@ -15,8 +16,8 @@ class DisplayOnMonitor:
                 
     # display the surface on the monitor
     def display(self, surface):
-        # adjust the surface to the monitor size
-        self.monitorScreen.blit(pygame.transform.scale(surface, (self.monitorWidth, self.monitorHeight)), (0, 0))
+        # adjust and update the surface to the monitorScreen
+        pygame.transform.scale(surface, (self.monitorWidth, self.monitorHeight), self.monitorScreen)
         # display
         pygame.display.flip()
         

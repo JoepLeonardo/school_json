@@ -3,18 +3,20 @@ from player import Player
 from ball import Ball
 import pygame
 from pygame.locals import *
+import sys
+import time
 
 #####################
 ### GAME SETTINGS ###
 #####################
 
 # Set player bad size
-playerSizeX = 20
-playerSizeY = 100
+playerSizeX = 15
+playerSizeY = 60
 
 # Set ball size
-ballSize = 20
-ballSpeed = 20
+ballSize = 15
+ballSpeed = 15
 
 #######################
 ### END OF SETTINGS ###
@@ -24,7 +26,7 @@ ballSpeed = 20
 pygame.init()
 clock = pygame.time.Clock()
 
-# variables
+# variables    MAKE THIS VAIRABLES BIGGER BUT WATCH IF IT FITS IN THE SCREEN
 playPong=True
 dirUp = -1
 dirDown = 1
@@ -32,6 +34,7 @@ dirLeft = -1
 dirRight = 1 
 dirNormal = 0
 playerMissedBall = 9
+debugMainLoopCnt = 0
 
 # make objects
 guiField = GuiField()
@@ -42,6 +45,9 @@ ball = Ball((guiField.getFieldWidth()/2), (guiField.getFieldHeight()/2), dirRigh
 # variables that need info from object(s)
 player1WallX = guiField.getFieldStartX() + playerSizeX
 player2WallX = guiField.getFieldEndX()- playerSizeX
+
+# Draw the field
+guiField.drawField()
 
 def ballHitPlayerDirection(playerY, playerSize, ballY, ballSize):
     dir = dirNormal
@@ -113,23 +119,37 @@ def handle_input():
             player1.move(pixelsToMove); 
     return True
 
-while playPong:
-    update_ball()
-    # draw
-    guiField.fieldClear()
-    guiField.fieldAddPlayer(player1.getPosX(), player1.getPosY(), playerSizeX, playerSizeY, 0)
-    guiField.fieldAddPlayer(player2.getPosX(), player2.getPosY(), playerSizeX, playerSizeY, 0)
-    guiField.fieldAddBall(ball.getPosX(), ball.getPosY(), ballSize)
+def displayGame():
+    # draw players and ball
+    guiField.drawPlayer(player1.getPosX(), player1.getPosY(), playerSizeX, playerSizeY, 0)
+    guiField.drawPlayer(player2.getPosX(), player2.getPosY(), playerSizeX, playerSizeY, 0)
+    guiField.drawBall(ball.getPosX(), ball.getPosY(), ballSize)
+    # display drawing
     guiField.fieldDisplay()
+    # clear field
+    guiField.removePlayer(player1.getPosX(), player1.getPosY(), playerSizeX, playerSizeY, 0)
+    guiField.removePlayer(player2.getPosX(), player2.getPosY(), playerSizeX, playerSizeY, 0)
+    guiField.removeBall(ball.getPosX(), ball.getPosY(), ballSize)
     
-    clock.tick(60)
+while playPong:
+    # debug timer info
+    print(str(debugMainLoopCnt) + " tick0 " + str(pygame.time.get_ticks()))
+    debugMainLoopCnt = debugMainLoopCnt+1    
     
+    update_ball()
     playPong = handle_input()
+    displayGame()
+    
+    # debug timer info
+    print(str(debugMainLoopCnt) + " tick1 " + str(pygame.time.get_ticks()-1))
+    
+    clock.tick(30)
         
 # end of programm
 del guiField
 del player1
 del player2
+del ball
 pygame.quit
 
 

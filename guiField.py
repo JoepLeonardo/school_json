@@ -1,6 +1,7 @@
 from displayOnMonitor import DisplayOnMonitor
 import pygame
 from pygame.locals import *
+
 pygame.init()
 
 class GuiField(DisplayOnMonitor):
@@ -23,7 +24,7 @@ class GuiField(DisplayOnMonitor):
     border_height = 20
        
            
-    def fieldClear(self):
+    def drawField(self):
         # make the surface black
         self.surfaceScreen.fill(self.colorBlack)
         
@@ -35,15 +36,23 @@ class GuiField(DisplayOnMonitor):
         while half_line_y < self.surfaceHeight:
             pygame.draw.rect(self.surfaceScreen, self.colorWhite, pygame.Rect(half_line_x, half_line_y, self.border_width, self.border_height))
             half_line_y += (self.border_height*2)
+        # TODO add score and gamename
             
-    def fieldAddPlayer(self, posX, posY, sizeX, sizeY, points):
+    def drawPlayer(self, posX, posY, sizeX, sizeY, points):
         # draw players bad
         pygame.draw.rect(self.surfaceScreen, self.colorDebug1, pygame.Rect((posX), (posY), sizeX, sizeY))
-        # TODO: draw players score
         
-    def fieldAddBall(self, posX, posY, size):
+    def removePlayer(self, posX, posY, sizeX, sizeY, points):
+        # remove players bad
+        pygame.draw.rect(self.surfaceScreen, self.colorBlack, pygame.Rect((posX), (posY), sizeX, sizeY))
+                
+    def drawBall(self, posX, posY, size):
         # draw ball
         pygame.draw.rect(self.surfaceScreen, self.colorDebug2, pygame.Rect((posX), (posY), size, size))
+        
+    def removeBall(self, posX, posY, size):
+        # remove ball
+        pygame.draw.rect(self.surfaceScreen, self.colorBlack, pygame.Rect((posX), (posY), size, size))
         
     def fieldDisplay(self):
         # display the surface
