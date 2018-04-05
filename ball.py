@@ -8,13 +8,17 @@ class Ball():
     # speed of the ball
     speed = 0
     
-    def __init__(self, inX, inY, inDirX, inDirY, inSize, inSpeed):
+    def __init__(self, inSize, inSpeed):
+        # all variable(s) that need te be set once
+        self.size = inSize
+        self.speed = inSpeed
+    
+    def reset(self, inX, inY, inDirX, inDirY):
+        # all variable(s) that need te be set at the begin of each game
         self.posX = inX
         self.posY = inY
         self.dirX = inDirX
         self.dirY = inDirY
-        self.size = inSize
-        self.speed = inSpeed
         
     def getPosX(self):
         return self.posX
@@ -40,5 +44,5 @@ class Ball():
         
     def updateDir(self, inDirX, inDirY):
         self.dirX = inDirX
-        self.dirY = inDirY    
+        self.dirY = inDirY
         

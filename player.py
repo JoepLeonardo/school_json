@@ -8,13 +8,18 @@ class Player():
     # points scored
     points = 0
     
-    def __init__(self, inX, inY, inSizeX, inSizeY, inMinY, inMaxY):
+    def __init__(self, inX, inSizeX, inSizeY, inMinY, inMaxY):
+        # all variable(s) that need te be set once
         self.posX = inX
-        self.posY = inY
         self.sizeX = inSizeX
         self.sizeY = inSizeY
         self.maxY = inMaxY
         self.minY = inMinY
+        self.points = 0
+        
+    def reset(self, inPosY):
+        # all variable(s) that need te be set at the begin of each game
+        self.posY = inPosY
         
     def getPosX(self):
         return self.posX
@@ -27,6 +32,12 @@ class Player():
     
     def getSizeY(self):
         return self.sizeY
+    
+    def getPoints(self):
+        return self.points
+    
+    def addPoint(self):
+        self.points = self.points + 1
     
     def move(self, direction):
         # check direction
@@ -43,6 +54,4 @@ class Player():
             else:
                 self.posY = self.minY
             
-    
-    def setPosY(self, inPosY):
-        self.posY = inPosY
+   

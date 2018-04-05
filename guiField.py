@@ -24,7 +24,7 @@ class GuiField(DisplayOnMonitor):
     border_height = 20
        
            
-    def drawField(self):
+    def drawFieldAndScore(self, scoreP1, scoreP2):
         # make the surface black
         self.surfaceScreen.fill(self.colorBlack)
         
@@ -36,13 +36,30 @@ class GuiField(DisplayOnMonitor):
         while half_line_y < self.surfaceHeight:
             pygame.draw.rect(self.surfaceScreen, self.colorWhite, pygame.Rect(half_line_x, half_line_y, self.border_width, self.border_height))
             half_line_y += (self.border_height*2)
-        # TODO add score and gamename
-            
-    def drawPlayer(self, posX, posY, sizeX, sizeY, points):
+        # draw score player1
+        if (scoreP1==0):
+            self.drawScore0(self.surfaceWidth/4)
+        else:
+            self.drawScore1(self.surfaceWidth/4)
+        # draw score player2
+        if (scoreP2==0):
+            self.drawScore0(self.surfaceWidth*3/4)
+        else:
+            self.drawScore1(self.surfaceWidth*3/4)
+    
+    def drawScore0(self, posX):
+        # draw a 0 via an empty rectangele
+        pygame.draw.rect(self.surfaceScreen, self.colorWhite, pygame.Rect((posX), (self.surfaceTop/6), (self.surfaceTop*2/6), (self.surfaceTop*4/6)), (int(self.surfaceTop/10)))
+    
+    def drawScore1(self, posX):
+        # draw a 1 via a rectangele
+        pygame.draw.rect(self.surfaceScreen, self.colorWhite, pygame.Rect((posX), (self.surfaceTop/6), (self.surfaceTop/10), (self.surfaceTop*4/6)))
+
+    def drawPlayer(self, posX, posY, sizeX, sizeY):
         # draw players bad
         pygame.draw.rect(self.surfaceScreen, self.colorDebug1, pygame.Rect((posX), (posY), sizeX, sizeY))
         
-    def removePlayer(self, posX, posY, sizeX, sizeY, points):
+    def removePlayer(self, posX, posY, sizeX, sizeY):
         # remove players bad
         pygame.draw.rect(self.surfaceScreen, self.colorBlack, pygame.Rect((posX), (posY), sizeX, sizeY))
                 
