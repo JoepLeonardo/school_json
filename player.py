@@ -1,21 +1,17 @@
 class Player():
-    # postition variabeles
-    posX = posY = 0
-    # size of the players bad
-    sizeX = sizeY = 0
-    # min and max position bad can be in the y-axis
-    minY = maxY = 0
-    # points scored
-    points = 0
-    
+       
     def __init__(self, inX, inSizeX, inSizeY, inMinY, inMaxY):
-        # all variable(s) that need te be set once
+        # points scored
+        self.points = 0
+        # position
         self.posX = inX
+        self.posY = 0
+        # size of the players bad
         self.sizeX = inSizeX
         self.sizeY = inSizeY
+        # min and max position bad can be in the y-axis
         self.maxY = inMaxY
-        self.minY = inMinY
-        self.points = 0
+        self.minY = inMinY        
         
     def reset(self, inPosY):
         # all variable(s) that need te be set at the begin of each game

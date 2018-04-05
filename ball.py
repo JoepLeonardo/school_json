@@ -1,17 +1,15 @@
 class Ball():
-    # postition variabeles
-    posX = posY = 0
-    # direction of the ball
-    dirX = dirY = 0
-    # size of the ball
-    size = 0
-    # speed of the ball
-    speed = 0
-    
+       
     def __init__(self, inSize, inSpeed):
-        # all variable(s) that need te be set once
+        # direction of the ball
         self.size = inSize
+        # speed of the ball
         self.speed = inSpeed
+        # position and direction
+        self.posX = 0
+        self.posY = 0
+        self.dirX = 0
+        self.dirY = 0
     
     def reset(self, inX, inY, inDirX, inDirY):
         # all variable(s) that need te be set at the begin of each game
