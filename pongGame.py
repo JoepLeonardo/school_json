@@ -13,25 +13,22 @@ clock = pygame.time.Clock()
 
 class PongGame():
 
-#########################################################
+######################################################
 ###################   GAME SETTINGS   ###################
 
-
     # Set player bad size
-    playerSizeX = 15
-    playerSizeY = 80
+    PLAYER_SIZE_X = 15
+    PLAYER_SIZE_Y = 80
 
     # Set ball size
-    ballSize = 15
-    ballSpeed = 30
-
+    BALL_SIZE = 15
+    BALL_SPEED = 30
 
 ###################  END OF SETTINGS  ###################
 #########################################################
-
     
     # play pong loop
-    PLAY_PONG=True
+    PLAY_PONG = True
     
     # game states
     GAME_STATE = None
@@ -54,40 +51,43 @@ class PongGame():
         # create objects
         self.input = InputHandler()
         self.guiField = GuiField()
-        self.player1 = Player(self.guiField.getFieldStartX(), self.playerSizeX, self.playerSizeY, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.playerSizeY))
-        self.player2 = Player((self.guiField.getFieldEndX()-self.playerSizeX), self.playerSizeX, self.playerSizeY, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.playerSizeY))
-        self.ball = Ball(self.ballSize, self.ballSpeed)
+        self.player1 = Player(self.guiField.getFieldStartX(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
+        self.player2 = Player((self.guiField.getFieldEndX()-self.PLAYER_SIZE_X), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
+        self.ball = Ball(self.BALL_SIZE, self.BALL_SPEED)
 
         # creat variables that need info from object(s)
-        self.player1WallX = self.guiField.getFieldStartX() + self.playerSizeX
-        self.player2WallX = self.guiField.getFieldEndX() - self.playerSizeX
+        self.player1WallX = self.guiField.getFieldStartX() + self.PLAYER_SIZE_X
+        self.player2WallX = self.guiField.getFieldEndX() - self.PLAYER_SIZE_X
         self.fieldHeigtMiddle = (((int)(self.guiField.getFieldHeight()/2)))
-        self.fieldWidthMiddle = (((int)(self.guiField.getFieldWidth()/2)))  
+        self.fieldWidthMiddle = (((int)(self.guiField.getFieldWidth()/2)))
+        
+        # reset the game so all variables are declared right
+        self.resetGame()
 
     def resetGame(self):
         # Reset the ball
-        self.ball.reset(self.fieldWidthMiddle, self.fieldHeigtMiddle-(int(self.ballSize/2)), self.DIR_RIGHT, self.DIR_NORMAL)
+        self.ball.reset(self.fieldWidthMiddle, self.fieldHeigtMiddle-(int(self.BALL_SIZE/2)), self.DIR_RIGHT, self.DIR_NORMAL)
         # Reset players
-        self.player1.reset(self.fieldHeigtMiddle-(int(self.playerSizeY/2)))
-        self.player2.reset(self.fieldHeigtMiddle-(int(self.playerSizeY/2)))
+        self.player1.reset(self.fieldHeigtMiddle-(int(self.PLAYER_SIZE_Y/2)))
+        self.player2.reset(self.fieldHeigtMiddle-(int(self.PLAYER_SIZE_Y/2)))
         # Draw the field and score
         self.guiField.drawFieldAndScore(self.player1.getPoints(), self.player2.getPoints())
         # Reset game state
         self.GAME_STATE = self.STATE_PLAY_NORMAL
 
-    def ballHitPlayerDirection(self, playerY, ballY):
+    def ballHitPlayerDir(self, playerY, ballY):
         dir = self.DIR_NORMAL
         # check if ball is higher than palyer
-        if ((ballY+self.ballSize) < playerY):
+        if ((ballY+self.BALL_SIZE) < playerY):
             dir = self.DIR_BALL_MISSED
         # check if the middle of the ball hit upper part of the palyer
-        elif ((ballY+self.ballSize) <= (playerY+(self.playerSizeY/3))):
+        elif ((ballY+self.BALL_SIZE) <= (playerY+(self.PLAYER_SIZE_Y/3))):
             dir = self.DIR_UP
         # check if ball is lower than player
-        elif (ballY > (playerY+self.playerSizeY)):
+        elif (ballY > (playerY+self.PLAYER_SIZE_Y)):
             dir = self.DIR_BALL_MISSED
         # check if the middle of the ball hit lower part of the palyer
-        elif (ballY >= (playerY+(self.playerSizeY*2/3))):
+        elif (ballY >= (playerY+(self.PLAYER_SIZE_Y*2/3))):
             dir = self.DIR_DOWN
         # else dir is normal
         # return the direction of the ball
@@ -102,16 +102,16 @@ class PongGame():
             #Check ball hits wall player1
             if((self.ball.getPosX()+self.ball.getDirX()) == self.player1WallX):
                 ballDirX = self.DIR_RIGHT
-                dirY_OrBallMissed = self.ballHitPlayerDirection(self.player1.getPosY(), self.ball.getPosY())
+                dirY_OrBallMissed = self.ballHitPlayerDir(self.player1.getPosY(), self.ball.getPosY())
             #Check ball hits wall player2
-            elif((self.ball.getPosX()+self.ball.getDirX()+self.ballSize) == self.player2WallX):
+            elif((self.ball.getPosX()+self.ball.getDirX()+self.BALL_SIZE) == self.player2WallX):
                 ballDirX = self.DIR_LEFT
-                dirY_OrBallMissed = self.ballHitPlayerDirection(self.player2.getPosY(), self.ball.getPosY())
+                dirY_OrBallMissed = self.ballHitPlayerDir(self.player2.getPosY(), self.ball.getPosY())
             #Check ball hits top
             elif((self.ball.getPosY()+self.ball.getDirY()) == self.guiField.getFieldStartY()):
                 dirY_OrBallMissed = self.DIR_DOWN
             #Check ball hits bottom
-            elif((self.ball.getPosY()+self.ball.getDirY()+self.ballSize) == self.guiField.getFieldEndY()):
+            elif((self.ball.getPosY()+self.ball.getDirY()+self.BALL_SIZE) == self.guiField.getFieldEndY()):
                 dirY_OrBallMissed = self.DIR_UP
             
             if(dirY_OrBallMissed != self.DIR_BALL_MISSED):
@@ -125,7 +125,7 @@ class PongGame():
                 else:
                     self.GAME_STATE = self.STATE_PLAYER1_SCORED
                 # end the loop
-                loopCnt = self.ballSpeed
+                loopCnt = self.BALL_SPEED
                     
     def handleConsoleinput(self):
         data = self.input.getConsole()
@@ -170,19 +170,17 @@ class PongGame():
 
     def displayGame(self):
         # draw players and ball
-        self.guiField.drawObject1(self.player1.getPosX(), self.player1.getPosY(), self.playerSizeX, self.playerSizeY)
-        self.guiField.drawObject1(self.player2.getPosX(), self.player2.getPosY(), self.playerSizeX, self.playerSizeY)
-        self.guiField.drawObject2(self.ball.getPosX(), self.ball.getPosY(), self.ballSize, self.ballSize)
+        self.guiField.drawObject1(self.player1.getPosX(), self.player1.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
+        self.guiField.drawObject1(self.player2.getPosX(), self.player2.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
+        self.guiField.drawObject2(self.ball.getPosX(), self.ball.getPosY(), self.BALL_SIZE, self.BALL_SIZE)
         # display drawing
         self.guiField.display()
         # clear field
-        self.guiField.removeObject(self.player1.getPosX(), self.player1.getPosY(), self.playerSizeX, self.playerSizeY)
-        self.guiField.removeObject(self.player2.getPosX(), self.player2.getPosY(), self.playerSizeX, self.playerSizeY)
-        self.guiField.removeObject(self.ball.getPosX(), self.ball.getPosY(), self.ballSize, self.ballSize)
+        self.guiField.removeObject(self.player1.getPosX(), self.player1.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
+        self.guiField.removeObject(self.player2.getPosX(), self.player2.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
+        self.guiField.removeObject(self.ball.getPosX(), self.ball.getPosY(), self.BALL_SIZE, self.BALL_SIZE)
 
     def playPong(self):
-        # reset the game befor start
-        self.resetGame()
         # play pong 
         while self.PLAY_PONG:
             # debug timer info

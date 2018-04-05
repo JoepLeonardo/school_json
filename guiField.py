@@ -81,9 +81,6 @@ class GuiField(DisplayOnMonitor):
         fieldHeight = self.SURFACE_HEIGHT -self.SURFACE_TOP -(self.BORDER_WIDTH*2)
         return fieldHeight
     
-    def getBORDER_WIDTH(self):
-        return self.BORDER_WIDTH
-    
     def getFieldStartY(self):
         # field y-axis start
         fieldStartY = self.SURFACE_TOP + self.BORDER_WIDTH
