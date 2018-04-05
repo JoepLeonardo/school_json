@@ -19,7 +19,7 @@ class PongGame():
 
     # Set player bad size
     playerSizeX = 15
-    playerSizeY = 60
+    playerSizeY = 80
 
     # Set ball size
     ballSize = 15
@@ -58,10 +58,10 @@ class PongGame():
 
     def resetGame(self):
         # Reset the ball
-        self.ball.reset(self.fieldWidthMiddle, self.fieldHeigtMiddle, self.dirRight, self.dirNormal)
+        self.ball.reset(self.fieldWidthMiddle, self.fieldHeigtMiddle-(int(self.ballSize/2)), self.dirRight, self.dirNormal)
         # Reset players
-        self.player1.reset(self.fieldHeigtMiddle)
-        self.player2.reset(self.fieldHeigtMiddle)
+        self.player1.reset(self.fieldHeigtMiddle-(int(self.playerSizeY/2)))
+        self.player2.reset(self.fieldHeigtMiddle-(int(self.playerSizeY/2)))
         # Draw the field and score
         self.guiField.drawFieldAndScore(self.player1.getPoints(), self.player2.getPoints())
         # Reset game state

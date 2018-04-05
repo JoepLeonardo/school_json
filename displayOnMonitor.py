@@ -7,7 +7,7 @@ class DisplayOnMonitor:
     # monitor resoluten
     monitorWidth = pygame.display.Info().current_w
     monitorHeight = pygame.display.Info().current_h
-    # create monitor screen |FULLSCREEN  
+    # create monitor screen  |FULLSCREEN 
     monitorScreen = pygame.display.set_mode((monitorWidth, monitorHeight),HWSURFACE|DOUBLEBUF)
            
     def __del__(self):
