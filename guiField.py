@@ -38,22 +38,41 @@ class GuiField(DisplayOnMonitor):
         
         # draw score player1
         if (scoreP1==0):
-            self.drawScore0(self.SURFACE_WIDTH/4)
+            self.drawScore0(self.SURFACE_WIDTH*1/4)
+        elif (scoreP1==1):
+            self.drawScore1(self.SURFACE_WIDTH*1/4)
         else:
-            self.drawScore1(self.SURFACE_WIDTH/4)
+            self.drawScore2(self.SURFACE_WIDTH*1/4)
         # draw score player2
         if (scoreP2==0):
             self.drawScore0(self.SURFACE_WIDTH*3/4)
-        else:
+        elif (scoreP2==1):
             self.drawScore1(self.SURFACE_WIDTH*3/4)
-        
+        else:
+            self.drawScore2(self.SURFACE_WIDTH*3/4)
+            
     def drawScore0(self, posX):
-        # draw a 0 via an empty rectangele
-        self.drawRectOpen(posX, (self.SURFACE_TOP/6), (self.SURFACE_TOP*2/6), (self.SURFACE_TOP*4/6), (int(self.SURFACE_TOP/10)))
+        # draw a 0 via multiple rectangeles
+        # horizontal lines (up to down)
+        self.drawRect(posX, (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*2/6), (self.SURFACE_TOP*1/6))
+        self.drawRect(posX, (self.SURFACE_TOP*9/12), (self.SURFACE_TOP*2/6), (self.SURFACE_TOP*1/6))
+        # vertical lines (left to right)
+        self.drawRect(posX, (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*10/12))
+        self.drawRect((posX+self.SURFACE_TOP*2/6), (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*10/12))
     
     def drawScore1(self, posX):
         # draw a 1 via a rectangele
-        self.drawRect(posX, (self.SURFACE_TOP/6), (self.SURFACE_TOP/10), (self.SURFACE_TOP*4/6))
+        self.drawRect(posX, (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*10/12))
+        
+    def drawScore2(self, posX):
+        # draw a 2 via multiple rectangeles
+        # horizontal lines (up to down)
+        self.drawRect(posX, (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*4/6), (self.SURFACE_TOP*1/6))
+        self.drawRect(posX, (self.SURFACE_TOP*5/12), (self.SURFACE_TOP*4/6), (self.SURFACE_TOP*1/6))
+        self.drawRect(posX, (self.SURFACE_TOP*9/12), (self.SURFACE_TOP*4/6), (self.SURFACE_TOP*1/6))
+        # vertical lines (left to right)
+        self.drawRect(posX, (self.SURFACE_TOP*5/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*5/12))
+        self.drawRect((posX+self.SURFACE_TOP*3/6), (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*5/12))
 
     def drawObject1(self, posX, posY, sizeX, sizeY):
         # draw players bad

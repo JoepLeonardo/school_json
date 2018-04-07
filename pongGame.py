@@ -23,6 +23,10 @@ class PongGame():
     # Set ball size
     BALL_SIZE = 15
     BALL_SPEED = 30
+    
+    # Time before the game starts
+    DELAY_BEFORE_START = 500
+    DELAY_PLAYER_SCORED = 500
 
 ###################  END OF SETTINGS  ###################
 #########################################################
@@ -72,8 +76,13 @@ class PongGame():
         self.player2.reset(self.fieldHeigtMiddle-(int(self.PLAYER_SIZE_Y/2)))
         # Draw the field and score
         self.guiField.drawFieldAndScore(self.player1.getPoints(), self.player2.getPoints())
-        # Reset game state
+        # Game state to noraml
         self.GAME_STATE = self.STATE_PLAY_NORMAL
+        # Display the current game state
+        self.displayGame()
+        # Wait 0.5sec before the game starts
+        pygame.time.delay(self.DELAY_BEFORE_START)
+
 
     def ballHitPlayerDir(self, playerY, ballY):
         dir = self.DIR_NORMAL
