@@ -13,7 +13,7 @@ clock = pygame.time.Clock()
 
 class PongGame():
 
-######################################################
+#########################################################
 ###################   GAME SETTINGS   ###################
 
     # Set player bad size
@@ -21,12 +21,13 @@ class PongGame():
     PLAYER_SIZE_Y = 80
 
     # Set ball size
-    BALL_SIZE = 15
+    BALL_SIZE = PLAYER_SIZE_X
     BALL_SPEED = 30
     
-    # Time before the game starts
+    # Time before the game starts (ms)
     DELAY_BEFORE_START = 500
-    DELAY_PLAYER_SCORED = 500
+    DELAY_PLAYER_SCORED = 1000
+    DELAY_PLAYER_WON = 3000
 
 ###################  END OF SETTINGS  ###################
 #########################################################
@@ -47,6 +48,9 @@ class PongGame():
     DIR_RIGHT = 1 
     DIR_NORMAL = 0
     DIR_BALL_MISSED = 9
+    
+    # maximum points a player can score
+    POINTS_MAX = 2
     
     # debug variables
     DEBUG_MAIN_LOOP_CNT = 0
@@ -80,7 +84,7 @@ class PongGame():
         self.GAME_STATE = self.STATE_PLAY_NORMAL
         # Display the current game state
         self.displayGame()
-        # Wait 0.5sec before the game starts
+        # Wait before the game starts
         pygame.time.delay(self.DELAY_BEFORE_START)
 
 
@@ -123,10 +127,10 @@ class PongGame():
             elif((self.ball.getPosY()+self.ball.getDirY()+self.BALL_SIZE) == self.guiField.getFieldEndY()):
                 dirY_OrBallMissed = self.DIR_UP
             
+            #Check if player not missed the ball
             if(dirY_OrBallMissed != self.DIR_BALL_MISSED):
-                # update ball dir and position
+                # update ball dir
                 self.ball.updateDir(ballDirX, dirY_OrBallMissed)
-                self.ball.updatePos()
             else:
                 #check who won via ballDirX left or right
                 if (ballDirX == self.DIR_RIGHT):
@@ -135,6 +139,8 @@ class PongGame():
                     self.GAME_STATE = self.STATE_PLAYER1_SCORED
                 # end the loop
                 loopCnt = self.BALL_SPEED
+             # update ball position
+            self.ball.updatePos()
                     
     def handleConsoleinput(self):
         data = self.input.getConsole()
@@ -188,6 +194,23 @@ class PongGame():
         self.guiField.removeObject(self.player1.getPosX(), self.player1.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
         self.guiField.removeObject(self.player2.getPosX(), self.player2.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
         self.guiField.removeObject(self.ball.getPosX(), self.ball.getPosY(), self.BALL_SIZE, self.BALL_SIZE)
+        
+    def playerScored(self):
+        # Display new score CAN BE OPTIMIZED
+        self.guiField.drawFieldAndScore(self.player1.getPoints(), self.player2.getPoints())
+        # Display current player and ball positions
+        self.displayGame()                
+        # Check if a player has max points
+        if ((self.player1.getPoints() == POINTS_MAX) or (self.player2.getPoints() == POINTS_MAX)):
+             # Wait to show player won
+            pygame.time.delay(self.DELAY_PLAYER_WON)
+            # End pong game
+            self.PLAY_PONG = False
+        else:
+            # Wait to show player scored
+            pygame.time.delay(self.DELAY_PLAYER_SCORED)
+            # Reset all positons
+            self.resetGame()
 
     def playPong(self):
         # play pong 
@@ -195,20 +218,20 @@ class PongGame():
             # debug timer info
             #print(str(DEBUG_MAIN_LOOP_CNT) + " tick0 " + str(pygame.time.get_ticks()))
             #DEBUG_MAIN_LOOP_CNT = DEBUG_MAIN_LOOP_CNT+1
-                        
-            #self.handleControllerInput()  Can only be implemented when controllers are done
+            
             #self.handleConsoleinput()     Can only be implemented when console board is done
             self.handleInput()
             
             if (self.GAME_STATE == self.STATE_PLAY_NORMAL):
+                #self.handleControllerInput()  Can only be implemented when controllers are done
                 self.displayGame()
                 self.updateGame()
             elif (self.GAME_STATE == self.STATE_PLAYER1_SCORED):
                 self.player1.addPoint()
-                self.resetGame()
+                self.playerScored()                
             elif (self.GAME_STATE == self.STATE_PLAYER2_SCORED):
                 self.player2.addPoint()
-                self.resetGame()                          
+                self.playerScored()                                       
             
             # debug timer info
             #print(str(DEBUG_MAIN_LOOP_CNT) + " tick1 " + str(pygame.time.get_ticks()-1))
