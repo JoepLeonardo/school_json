@@ -22,10 +22,16 @@ class GuiMenu(DisplayOnMonitor):
           
     def __init__(self):
         DisplayOnMonitor.__init__(self)
+        # clear the current screen
+        self.emptySurfaceScreen()
+         # show the drawings
+        self.display()
+        # settings
         self.continueShow = True
         self.niveau = self.NIVEAU_MIN
+        # draw the menu
         self.drawNiv(self.niveau)
-            
+                    
     def drawHead(self):
         self.drawText(self.HEAD_NAME, self.HEAD_SIZE, True, self.TEXT_IN_THE_MIDDLE, self.HEIGHT_HEAD)
         
@@ -51,10 +57,12 @@ class GuiMenu(DisplayOnMonitor):
         # show the drawings
         self.display()
         
-    def loopMenu(self):
+    def handleMenu(self):
+        action = 0
         while (self.continueShow):
             for event in pygame.event.get():
                 if (event.type == QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE)):
+                    action = 0
                     self.continueShow = False
                 elif (event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT):
                     if (self.niveau > self.NIVEAU_MIN):
@@ -64,12 +72,14 @@ class GuiMenu(DisplayOnMonitor):
                     if (self.niveau < self.NIVEAU_MAX):
                         self.niveau = self.niveau + 1
                     self.drawNiv(self.niveau)
-
-gui = GuiMenu()
-gui.loopMenu()
-del gui
-
-
+                elif (event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN):
+                    action = self.niveau
+                    self.continueShow = False
+                    print("enterr")
+        # end of while, return menu choice
+        return action
+                    
+                    
 
 
 

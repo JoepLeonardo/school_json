@@ -22,7 +22,9 @@ class PongGame():
 
     # Set ball size
     BALL_SIZE = PLAYER_SIZE_X
-    BALL_SPEED = 30
+    BALL_SPEED_NIV1 = 15
+    BALL_SPEED_NIV2 = 30
+    BALL_SPEED_NIV3 = 45
     
     # Time before the game starts (ms)
     DELAY_BEFORE_START = 500
@@ -55,13 +57,18 @@ class PongGame():
     # debug variables
     DEBUG_MAIN_LOOP_CNT = 0
     
-    def __init__(self):
+    def __init__(self, niveau):
         # create objects
         self.input = InputHandler()
         self.guiField = GuiField()
         self.player1 = Player(self.guiField.getFieldStartX(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
         self.player2 = Player((self.guiField.getFieldEndX()-self.PLAYER_SIZE_X), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
-        self.ball = Ball(self.BALL_SIZE, self.BALL_SPEED)
+        ballSpeed = self.BALL_SPEED_NIV1
+        if (niveau == 2):
+            ballSpeed = self.BALL_SPEED_NIV2
+        if (niveau == 3):
+            ballSpeed = self.BALL_SPEED_NIV3
+        self.ball = Ball(self.BALL_SIZE, ballSpeed)
 
         # creat variables that need info from object(s)
         self.player1WallX = self.guiField.getFieldStartX() + self.PLAYER_SIZE_X
@@ -137,7 +144,7 @@ class PongGame():
                 else:
                     self.GAME_STATE = self.STATE_PLAYER1_SCORED
                 # end the loop
-                loopCnt = self.BALL_SPEED
+                loopCnt = self.ball.getSpeed()
              # update ball position
             self.ball.updatePos()
                     
