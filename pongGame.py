@@ -108,7 +108,6 @@ class PongGame():
 
     def updateGame(self):
         for loopCnt in range(0, self.ball.getSpeed()):
-            #print("for update")
             ballDirX = self.ball.getDirX()
             dirY_OrBallMissed = self.ball.getDirY()
             
@@ -201,7 +200,7 @@ class PongGame():
         # Display current player and ball positions
         self.displayGame()                
         # Check if a player has max points
-        if ((self.player1.getPoints() == POINTS_MAX) or (self.player2.getPoints() == POINTS_MAX)):
+        if ((self.player1.getPoints() == self.POINTS_MAX) or (self.player2.getPoints() == self.POINTS_MAX)):
              # Wait to show player won
             pygame.time.delay(self.DELAY_PLAYER_WON)
             # End pong game
@@ -216,8 +215,8 @@ class PongGame():
         # play pong 
         while self.PLAY_PONG:
             # debug timer info
-            #print(str(DEBUG_MAIN_LOOP_CNT) + " tick0 " + str(pygame.time.get_ticks()))
-            #DEBUG_MAIN_LOOP_CNT = DEBUG_MAIN_LOOP_CNT+1
+            print(str(self.DEBUG_MAIN_LOOP_CNT) + " tick0 " + str(pygame.time.get_ticks()))
+            self.DEBUG_MAIN_LOOP_CNT = self.DEBUG_MAIN_LOOP_CNT+1
             
             #self.handleConsoleinput()     Can only be implemented when console board is done
             self.handleInput()
@@ -234,7 +233,7 @@ class PongGame():
                 self.playerScored()                                       
             
             # debug timer info
-            #print(str(DEBUG_MAIN_LOOP_CNT) + " tick1 " + str(pygame.time.get_ticks()-1))
+            print(str(self.DEBUG_MAIN_LOOP_CNT) + " tick1 " + str(pygame.time.get_ticks()-1))
             clock.tick(30)
             
         # end of programm
