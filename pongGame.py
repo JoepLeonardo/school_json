@@ -215,8 +215,8 @@ class PongGame():
         # play pong 
         while self.PLAY_PONG:
             # debug timer info
-            print(str(self.DEBUG_MAIN_LOOP_CNT) + " tick0 " + str(pygame.time.get_ticks()))
-            self.DEBUG_MAIN_LOOP_CNT = self.DEBUG_MAIN_LOOP_CNT+1
+            #print(str(self.DEBUG_MAIN_LOOP_CNT) + " tick0 " + str(pygame.time.get_ticks()))
+            #self.DEBUG_MAIN_LOOP_CNT = self.DEBUG_MAIN_LOOP_CNT+1
             
             #self.handleConsoleinput()     Can only be implemented when console board is done
             self.handleInput()
@@ -233,7 +233,8 @@ class PongGame():
                 self.playerScored()                                       
             
             # debug timer info
-            print(str(self.DEBUG_MAIN_LOOP_CNT) + " tick1 " + str(pygame.time.get_ticks()-1))
+            #print(str(self.DEBUG_MAIN_LOOP_CNT) + " tick1 " + str(pygame.time.get_ticks()-1))
+            
             clock.tick(30)
             
         # end of programm

@@ -18,6 +18,10 @@ class DisplayOnMonitor:
     COLOR_DEBUG1 = (0, 255, 0)
     COLOR_DEBUG2 = (0, 155, 255)
     
+    # text settings
+    FONT = 'Arial'
+    TEXT_IN_THE_MIDDLE = 9999
+    
     def __init__(self):        
         # create monitor screen where surface is going to be displayed on  |FULLSCREEN 
         self.monitorScreen = pygame.display.set_mode((self.MONITOR_WIDTH, self.MONITOR_HEIGHT),HWSURFACE|DOUBLEBUF)                 
@@ -51,6 +55,17 @@ class DisplayOnMonitor:
     # remove a rect
     def removeRect(self, posX, posY, width, height):
         pygame.draw.rect(self.surfaceScreen, self.COLOR_BLACK, pygame.Rect(posX, posY, width, height))
+        
+    def drawText(self, text, size, bold, x, y):
+        # Create the text on a surface
+        myfont = pygame.font.SysFont(self.FONT, size, bold)
+        surfaceText = myfont.render(text, False, self.COLOR_WHITE)
+        # Check if text needs to be placed in the middle of the x-axis
+        if (x==self.TEXT_IN_THE_MIDDLE):
+            x = (self.SURFACE_WIDTH/2) - (surfaceText.get_width()/2)
+        # Put text on surfaceScreen
+        self.surfaceScreen.blit(surfaceText,(x, y))
+        
                 
     # display the surface on the monitor
     def display(self):
