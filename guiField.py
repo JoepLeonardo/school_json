@@ -73,6 +73,10 @@ class GuiField(DisplayOnMonitor):
         # vertical lines (left to right)
         self.drawRect(posX, (self.SURFACE_TOP*5/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*5/12))
         self.drawRect((posX+self.SURFACE_TOP*3/6), (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*5/12))
+    
+    def drawObject(self, posX, posY, sizeX, sizeY):
+        # draw ball
+        self.drawRect(posX, posY, sizeX, sizeY)
 
     def drawObject1(self, posX, posY, sizeX, sizeY):
         # draw players bad

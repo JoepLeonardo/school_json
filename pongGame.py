@@ -18,7 +18,7 @@ class PongGame():
 
     # Set player bad size
     PLAYER_SIZE_X = 15
-    PLAYER_SIZE_Y = 80
+    PLAYER_SIZE_Y = 70
 
     # Set ball size
     BALL_SIZE = PLAYER_SIZE_X
@@ -191,9 +191,9 @@ class PongGame():
 
     def displayGame(self):
         # draw players and ball
-        self.guiField.drawObject1(self.player1.getPosX(), self.player1.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
-        self.guiField.drawObject1(self.player2.getPosX(), self.player2.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
-        self.guiField.drawObject2(self.ball.getPosX(), self.ball.getPosY(), self.BALL_SIZE, self.BALL_SIZE)
+        self.guiField.drawObject(self.player1.getPosX(), self.player1.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
+        self.guiField.drawObject(self.player2.getPosX(), self.player2.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
+        self.guiField.drawObject(self.ball.getPosX(), self.ball.getPosY(), self.BALL_SIZE, self.BALL_SIZE)
         # display drawing
         self.guiField.display()
         # clear field
