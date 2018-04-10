@@ -22,9 +22,9 @@ class PongGame():
 
     # Set ball size
     BALL_SIZE = PLAYER_SIZE_X
-    BALL_SPEED_NIV1 = 15
-    BALL_SPEED_NIV2 = 30
-    BALL_SPEED_NIV3 = 45
+    BALL_SPEED_NIV1 = 10
+    BALL_SPEED_NIV2 = 20
+    BALL_SPEED_NIV3 = 30
     
     # Ball speed increasement after hit with player
     BALL_SPEED_INCREASE = 1
@@ -56,25 +56,24 @@ class PongGame():
     DIR_BALL_MISSED = 9
     # maximum points a player can score (guiField display's until 3)
     POINTS_MAX = 3
+    # fps that will be reached if programm is fast enough
+    FPS_MAX = 60
     
     # debug variables
-    DEBUG_MAIN_LOOP_CNT = 0
-    
-    def __init__(self, niveau):
+    DEBUG_LOOP_CNT = 0
+    DEBUG_LOOP_START_TIME = 0
+        
+    def __init__(self, speed):
         pygame.init()
         # create objects
         self.input = InputHandler()
         self.guiField = GuiField()
         self.player1 = Player((self.guiField.getFieldStartX()+self.SPACE_WALL_PLAYER), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
         self.player2 = Player((self.guiField.getFieldEndX()-self.PLAYER_SIZE_X-self.SPACE_WALL_PLAYER), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
-        ballSpeed = self.BALL_SPEED_NIV1
-        if (niveau == 2):
-            ballSpeed = self.BALL_SPEED_NIV2
-        if (niveau == 3):
-            ballSpeed = self.BALL_SPEED_NIV3
-        self.ball = Ball(self.BALL_SIZE, ballSpeed)
-
+        self.ball = Ball(self.BALL_SIZE)
+        
         # creat variables that need info from object(s)
+        self.ballStartSpeed = speed
         self.player1WallX = self.player1.getPosX() + self.PLAYER_SIZE_X
         self.player2WallX = self.player2.getPosX()
         self.fieldHeigtMiddle = (((int)(self.guiField.getFieldHeight()/2)))
@@ -85,7 +84,7 @@ class PongGame():
 
     def resetGame(self):
         # Reset the ball
-        self.ball.reset(self.fieldWidthMiddle, self.fieldHeigtMiddle-(int(self.BALL_SIZE/2)), self.DIR_RIGHT, self.DIR_NORMAL)
+        self.ball.reset(self.fieldWidthMiddle, self.fieldHeigtMiddle-(int(self.BALL_SIZE/2)), self.DIR_RIGHT, self.DIR_NORMAL, self.ballStartSpeed)
         # Reset players
         self.player1.reset(self.fieldHeigtMiddle-(int(self.PLAYER_SIZE_Y/2)))
         self.player2.reset(self.fieldHeigtMiddle-(int(self.PLAYER_SIZE_Y/2)))
@@ -201,7 +200,7 @@ class PongGame():
         self.guiField.drawObject(self.player2.getPosX(), self.player2.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
         self.guiField.drawObject(self.ball.getPosX(), self.ball.getPosY(), self.BALL_SIZE, self.BALL_SIZE)
         # display drawing
-        self.guiField.display()
+        self.guiField.displayFast()
         # clear field
         self.guiField.removeObject(self.player1.getPosX(), self.player1.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
         self.guiField.removeObject(self.player2.getPosX(), self.player2.getPosY(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y)
@@ -228,15 +227,22 @@ class PongGame():
         # play pong 
         while self.PLAY_PONG:
             # debug timer info
-            #print(str(self.DEBUG_MAIN_LOOP_CNT) + " tick0 " + str(pygame.time.get_ticks()))
-            #self.DEBUG_MAIN_LOOP_CNT = self.DEBUG_MAIN_LOOP_CNT+1
+            #self.DEBUG_LOOP_START_TIME = pygame.time.get_ticks()
             
             #self.handleConsoleinput()     Can only be implemented when console board is done
             self.handleInput()
             
             if (self.GAME_STATE == self.STATE_PLAY_NORMAL):
-                #self.handleControllerInput()  Can only be implemented when controllers are done
+                #self.handleControllerInput()  Can only be implemented when controllers are done                
+                
+                
+                self.DEBUG_LOOP_START_TIME = pygame.time.get_ticks()
+                               
                 self.displayGame()
+                
+                print(str(self.DEBUG_LOOP_CNT) + " time " + str(pygame.time.get_ticks()-self.DEBUG_LOOP_START_TIME) + " tick: "+ str(pygame.time.get_ticks()))
+                
+                
                 self.updateGame()
             elif (self.GAME_STATE == self.STATE_PLAYER1_SCORED):
                 self.player1.addPoint()
@@ -246,9 +252,12 @@ class PongGame():
                 self.playerScored()                                       
             
             # debug timer info
-            #print(str(self.DEBUG_MAIN_LOOP_CNT) + " tick1 " + str(pygame.time.get_ticks()-1))
+            #print(str(self.DEBUG_LOOP_CNT) + " time " + str(pygame.time.get_ticks()-self.DEBUG_LOOP_START_TIME) + " tick: "+ str(pygame.time.get_ticks()))
+            #if ((50 < (pygame.time.get_ticks()-self.DEBUG_LOOP_START_TIME)) and (self.DEBUG_LOOP_CNT > 10)):
+            #     pygame.time.delay(1000)
+            self.DEBUG_LOOP_CNT = self.DEBUG_LOOP_CNT+1
             
-            clock.tick(30)
+            clock.tick(self.FPS_MAX)
             
 
 

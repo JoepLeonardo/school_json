@@ -6,102 +6,97 @@ pygame.init()
 
 class GuiField(DisplayOnMonitor):
     
+    # size of gui of the game
+    GUI_WIDTH = DisplayOnMonitor.MONITOR_WIDTH
+    GUI_HEIGHT = DisplayOnMonitor.MONITOR_HEIGHT
     # size above the game to display score and gamename
-    SURFACE_TOP = 100
+    GUI_TOP = 100
     # border and halfline settings
     BORDER_WIDTH = 5
     BORDER_HEIGHT = 20
         
     def __init__(self):
         DisplayOnMonitor.__init__(self)
-        self.halfLineX = ((int(self.SURFACE_WIDTH/2)) - (int(self.BORDER_WIDTH/2)))
+        self.halfLineX = ((int(self.GUI_WIDTH/2)) - (int(self.BORDER_WIDTH/2)))
             
     def drawHalfLine(self):
         # draw board half line
-        halfLineY = self.SURFACE_TOP
+        halfLineY = self.GUI_TOP
         while halfLineY < self.SURFACE_HEIGHT:
-            self.drawRect(self.halfLineX, halfLineY, self.BORDER_WIDTH, self.BORDER_HEIGHT)
+            self.drawRectFast(self.halfLineX, halfLineY, self.BORDER_WIDTH, self.BORDER_HEIGHT)
             halfLineY += (self.BORDER_HEIGHT*2)
            
     def drawFieldAndScore(self, scoreP1, scoreP2):
         # make the surface black
-        self.emptySurfaceScreen()
+        self.emptyScreenFast()
         
         # draw border gamefield (line above, right, left, under)
-        self.drawRect(0, self.SURFACE_TOP, self.SURFACE_WIDTH, self.BORDER_WIDTH)
-        self.drawRect(0, self.SURFACE_TOP, self.BORDER_WIDTH, (self.SURFACE_HEIGHT-self.SURFACE_TOP))
-        self.drawRect((self.SURFACE_WIDTH-self.BORDER_WIDTH), self.SURFACE_TOP, self.BORDER_WIDTH, (self.SURFACE_HEIGHT-self.SURFACE_TOP))
-        self.drawRect(0, (self.SURFACE_HEIGHT-self.BORDER_WIDTH), self.SURFACE_WIDTH, self.BORDER_WIDTH)
+        self.drawRectFast(0, self.GUI_TOP, self.GUI_WIDTH, self.BORDER_WIDTH)
+        self.drawRectFast(0, self.GUI_TOP, self.BORDER_WIDTH, (self.SURFACE_HEIGHT-self.GUI_TOP))
+        self.drawRectFast((self.GUI_WIDTH-self.BORDER_WIDTH), self.GUI_TOP, self.BORDER_WIDTH, (self.SURFACE_HEIGHT-self.GUI_TOP))
+        self.drawRectFast(0, (self.SURFACE_HEIGHT-self.BORDER_WIDTH), self.GUI_WIDTH, self.BORDER_WIDTH)
                          
         # draw board half line
         self.drawHalfLine()
         
         # draw score player1
         if (scoreP1==0):
-            self.drawScore0(self.SURFACE_WIDTH*1/4)
+            self.drawScore0(self.GUI_WIDTH*1/4)
         elif (scoreP1==1):
-            self.drawScore1(self.SURFACE_WIDTH*1/4)
+            self.drawScore1(self.GUI_WIDTH*1/4)
         elif (scoreP1==2):
-            self.drawScore2(self.SURFACE_WIDTH*1/4)
+            self.drawScore2(self.GUI_WIDTH*1/4)
         else:
-            self.drawScore3(self.SURFACE_WIDTH*1/4)
+            self.drawScore3(self.GUI_WIDTH*1/4)
         # draw score player2
         if (scoreP2==0):
-            self.drawScore0(self.SURFACE_WIDTH*3/4)
+            self.drawScore0(self.GUI_WIDTH*3/4)
         elif (scoreP2==1):
-            self.drawScore1(self.SURFACE_WIDTH*3/4)
+            self.drawScore1(self.GUI_WIDTH*3/4)
         elif (scoreP2==2):
-            self.drawScore2(self.SURFACE_WIDTH*3/4)
+            self.drawScore2(self.GUI_WIDTH*3/4)
         else:
-            self.drawScore3(self.SURFACE_WIDTH*3/4)
+            self.drawScore3(self.GUI_WIDTH*3/4)
             
     def drawScore0(self, posX):
         # draw a 0 via multiple rectangeles
         # horizontal lines (up to down)
-        self.drawRect(posX, (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*2/6), (self.SURFACE_TOP*1/6))
-        self.drawRect(posX, (self.SURFACE_TOP*9/12), (self.SURFACE_TOP*2/6), (self.SURFACE_TOP*1/6))
+        self.drawRectFast(posX, (self.GUI_TOP*1/12), (self.GUI_TOP*2/6), (self.GUI_TOP*1/6))
+        self.drawRectFast(posX, (self.GUI_TOP*9/12), (self.GUI_TOP*2/6), (self.GUI_TOP*1/6))
         # vertical lines (left to right)
-        self.drawRect(posX, (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*10/12))
-        self.drawRect((posX+self.SURFACE_TOP*2/6), (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*10/12))
+        self.drawRectFast(posX, (self.GUI_TOP*1/12), (self.GUI_TOP*1/6), (self.GUI_TOP*10/12))
+        self.drawRectFast((posX+self.GUI_TOP*2/6), (self.GUI_TOP*1/12), (self.GUI_TOP*1/6), (self.GUI_TOP*10/12))
     
     def drawScore1(self, posX):
         # draw a 1 via a rectangele
-        self.drawRect(posX, (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*10/12))
+        self.drawRectFast(posX, (self.GUI_TOP*1/12), (self.GUI_TOP*1/6), (self.GUI_TOP*10/12))
         
     def drawScore2(self, posX):
         # draw a 2 via multiple rectangeles
         # horizontal lines (up to down)
-        self.drawRect(posX, (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*4/6), (self.SURFACE_TOP*1/6))
-        self.drawRect(posX, (self.SURFACE_TOP*5/12), (self.SURFACE_TOP*4/6), (self.SURFACE_TOP*1/6))
-        self.drawRect(posX, (self.SURFACE_TOP*9/12), (self.SURFACE_TOP*4/6), (self.SURFACE_TOP*1/6))
+        self.drawRectFast(posX, (self.GUI_TOP*1/12), (self.GUI_TOP*4/6), (self.GUI_TOP*1/6))
+        self.drawRectFast(posX, (self.GUI_TOP*5/12), (self.GUI_TOP*4/6), (self.GUI_TOP*1/6))
+        self.drawRectFast(posX, (self.GUI_TOP*9/12), (self.GUI_TOP*4/6), (self.GUI_TOP*1/6))
         # vertical lines (left to right)
-        self.drawRect(posX, (self.SURFACE_TOP*5/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*5/12))
-        self.drawRect((posX+self.SURFACE_TOP*3/6), (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*5/12))
+        self.drawRectFast(posX, (self.GUI_TOP*5/12), (self.GUI_TOP*1/6), (self.GUI_TOP*5/12))
+        self.drawRectFast((posX+self.GUI_TOP*3/6), (self.GUI_TOP*1/12), (self.GUI_TOP*1/6), (self.GUI_TOP*5/12))
     
     def drawScore3(self, posX):
         # draw a 3 via multiple rectangeles
         # horizontal lines (up to down)
-        self.drawRect(posX, (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*4/6), (self.SURFACE_TOP*1/6))
-        self.drawRect(posX, (self.SURFACE_TOP*5/12), (self.SURFACE_TOP*4/6), (self.SURFACE_TOP*1/6))
-        self.drawRect(posX, (self.SURFACE_TOP*9/12), (self.SURFACE_TOP*4/6), (self.SURFACE_TOP*1/6))
+        self.drawRectFast(posX, (self.GUI_TOP*1/12), (self.GUI_TOP*4/6), (self.GUI_TOP*1/6))
+        self.drawRectFast(posX, (self.GUI_TOP*5/12), (self.GUI_TOP*4/6), (self.GUI_TOP*1/6))
+        self.drawRectFast(posX, (self.GUI_TOP*9/12), (self.GUI_TOP*4/6), (self.GUI_TOP*1/6))
         # vertical lines (left to right)
-        self.drawRect((posX+self.SURFACE_TOP*3/6), (self.SURFACE_TOP*1/12), (self.SURFACE_TOP*1/6), (self.SURFACE_TOP*10/12))
+        self.drawRectFast((posX+self.GUI_TOP*3/6), (self.GUI_TOP*1/12), (self.GUI_TOP*1/6), (self.GUI_TOP*10/12))
     
     def drawObject(self, posX, posY, sizeX, sizeY):
         # draw ball
-        self.drawRect(posX, posY, sizeX, sizeY)
-
-    def drawObject1(self, posX, posY, sizeX, sizeY):
-        # draw players bad
-        self.drawRectDebug1(posX, posY, sizeX, sizeY)
-                
-    def drawObject2(self, posX, posY, sizeX, sizeY):
-        # draw ball
-        self.drawRectDebug2(posX, posY, sizeX, sizeY)
+        self.drawRectFast(posX, posY, sizeX, sizeY)
                 
     def removeObject(self, posX, posY, sizeX, sizeY):
         # remove object
-        self.removeRect(posX, posY, sizeX, sizeY)
+        self.removeRectFast(posX, posY, sizeX, sizeY)
         # check if object is on half line
         if (((posX+sizeY) >= self.halfLineX) and (posX <= (self.halfLineX+self.BORDER_WIDTH))):
             # draw board half line
@@ -109,17 +104,17 @@ class GuiField(DisplayOnMonitor):
             
     def getFieldWidth(self):
         # Width of the black part of the field
-        fieldWidth = self.SURFACE_WIDTH -(self.BORDER_WIDTH*2)
+        fieldWidth = self.GUI_WIDTH -(self.BORDER_WIDTH*2)
         return fieldWidth
 
     def getFieldHeight(self):
         # Height of the black part of the field
-        fieldHeight = self.SURFACE_HEIGHT -self.SURFACE_TOP -(self.BORDER_WIDTH*2)
+        fieldHeight = self.SURFACE_HEIGHT -self.GUI_TOP -(self.BORDER_WIDTH*2)
         return fieldHeight
     
     def getFieldStartY(self):
         # field y-axis start
-        fieldStartY = self.SURFACE_TOP + self.BORDER_WIDTH
+        fieldStartY = self.GUI_TOP + self.BORDER_WIDTH
         return fieldStartY
     
     def getFieldEndY(self):
@@ -133,7 +128,7 @@ class GuiField(DisplayOnMonitor):
     
     def getFieldEndX(self):
         # field x-axis end
-        fieldEndX = self.SURFACE_WIDTH - self.BORDER_WIDTH
+        fieldEndX = self.GUI_WIDTH - self.BORDER_WIDTH
         return fieldEndX
 
     

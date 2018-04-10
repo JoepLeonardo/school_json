@@ -15,8 +15,6 @@ class DisplayOnMonitor:
     # colors
     COLOR_WHITE = (255, 255, 255)
     COLOR_BLACK = (0, 0, 0)
-    COLOR_DEBUG1 = (0, 255, 0)
-    COLOR_DEBUG2 = (0, 155, 255)
     
     # text settings
     FONT = 'Arial'
@@ -28,6 +26,29 @@ class DisplayOnMonitor:
         # create surface screen where all items are going to be displayed on
         self.surfaceScreen = pygame.Surface((self.SURFACE_WIDTH, self.SURFACE_HEIGHT))
         
+    ###############################################
+    # FUNCTIONSS FOR FAST DISPLAY (no scaling)
+    
+    def emptyScreenFast(self):
+        # make the monitor screen black
+        self.monitorScreen.fill(self.COLOR_BLACK)
+    
+    # draw a rect  direct on the monitorScreen
+    def drawRectFast(self, posX, posY, width, height):
+        pygame.draw.rect(self.monitorScreen, self.COLOR_WHITE, pygame.Rect(posX, posY, width, height))
+        
+    # remove a rect direct on the monitorScreen
+    def removeRectFast(self, posX, posY, width, height):
+        pygame.draw.rect(self.monitorScreen, self.COLOR_BLACK, pygame.Rect(posX, posY, width, height))
+        
+     # display the montorScreen direct on the monitor
+    def displayFast(self):
+        # display the monitorScreen
+        pygame.display.flip()
+    
+    ###############################################
+    # FUNCTIONS FOR SCALING DISPLAY
+        
     def emptySurfaceScreen(self):
         # make the surface black
         self.surfaceScreen.fill(self.COLOR_BLACK)
@@ -36,22 +57,10 @@ class DisplayOnMonitor:
     def drawRect(self, posX, posY, width, height):
         pygame.draw.rect(self.surfaceScreen, self.COLOR_WHITE, pygame.Rect(posX, posY, width, height))
     
-    # draw a rect thats open from the inside
-    def drawRectOpen(self, posX, posY, width, height, open):
-        pygame.draw.rect(self.surfaceScreen, self.COLOR_WHITE, pygame.Rect(posX, posY, width, height), open)
-        
-    # DEBUG function to draw a rect in color    
-    def drawRectDebug1(self, posX, posY, width, height):
-        pygame.draw.rect(self.surfaceScreen, self.COLOR_DEBUG1, pygame.Rect(posX, posY, width, height))
-    
-    # DEBUG function to draw a rect in color    
-    def drawRectDebug2(self, posX, posY, width, height):
-        pygame.draw.rect(self.surfaceScreen, self.COLOR_DEBUG2, pygame.Rect(posX, posY, width, height))
-    
     # remove a rect
     def removeRect(self, posX, posY, width, height):
         pygame.draw.rect(self.surfaceScreen, self.COLOR_BLACK, pygame.Rect(posX, posY, width, height))
-        
+    
     def drawText(self, text, size, bold, x, y):
         # Create the text on a surface
         myfont = pygame.font.SysFont(self.FONT, size, bold)
@@ -66,8 +75,9 @@ class DisplayOnMonitor:
     def display(self):
         # adjust and update the surfaceScreen to the monitorScreen
         pygame.transform.scale(self.surfaceScreen, (self.MONITOR_WIDTH, self.MONITOR_HEIGHT), self.monitorScreen)
-        # display
-        pygame.display.flip()
+        self.displayFast()
+    
+   
         
         
 

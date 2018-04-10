@@ -77,7 +77,7 @@ class GuiMenu(DisplayOnMonitor):
                     action = self.niveau
                     self.continueShow = False
         # end of while, return menu choice
-        return action
+        return (action*10)
                     
                     
 
