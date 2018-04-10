@@ -63,17 +63,19 @@ class PongGame():
     DEBUG_LOOP_CNT = 0
     DEBUG_LOOP_START_TIME = 0
         
-    def __init__(self, speed):
+    def __init__(self, ballSpeed):
         pygame.init()
         # create objects
         self.input = InputHandler()
         self.guiField = GuiField()
-        self.player1 = Player((self.guiField.getFieldStartX()+self.SPACE_WALL_PLAYER), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
-        self.player2 = Player((self.guiField.getFieldEndX()-self.PLAYER_SIZE_X-self.SPACE_WALL_PLAYER), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
         self.ball = Ball(self.BALL_SIZE)
-        
-        # creat variables that need info from object(s)
-        self.ballStartSpeed = speed
+        player1PosX = self.guiField.getFieldStartX() + self.SPACE_WALL_PLAYER
+        player2PosX = self.guiField.getFieldEndX() -self.SPACE_WALL_PLAYER - self.PLAYER_SIZE_X
+        self.player1 = Player(player1PosX, self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
+        self.player2 = Player(player2PosX, self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
+                
+        # create variables that need info from object(s)
+        self.ballStartSpeed = ballSpeed
         self.player1WallX = self.player1.getPosX() + self.PLAYER_SIZE_X
         self.player2WallX = self.player2.getPosX()
         self.fieldHeigtMiddle = (((int)(self.guiField.getFieldHeight()/2)))
