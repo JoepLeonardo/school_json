@@ -26,12 +26,8 @@ class DisplayOnMonitor:
         # create monitor screen where surface is going to be displayed on |FULLSCREEN
         self.monitorScreen = pygame.display.set_mode((self.MONITOR_WIDTH, self.MONITOR_HEIGHT),HWSURFACE|DOUBLEBUF)
         # create surface screen where all items are going to be displayed on
-        self.surfaceScreen = pygame.Surface((self.SURFACE_WIDTH, self.SURFACE_HEIGHT))      
-           
-    #def __del__(self):
-        # close the display
-        #pygame.display.quit()
-            
+        self.surfaceScreen = pygame.Surface((self.SURFACE_WIDTH, self.SURFACE_HEIGHT))
+        
     def emptySurfaceScreen(self):
         # make the surface black
         self.surfaceScreen.fill(self.COLOR_BLACK)
@@ -65,8 +61,7 @@ class DisplayOnMonitor:
             x = (self.SURFACE_WIDTH/2) - (surfaceText.get_width()/2)
         # Put text on surfaceScreen
         self.surfaceScreen.blit(surfaceText,(x, y))
-        
-                
+                        
     # display the surface on the monitor
     def display(self):
         # adjust and update the surfaceScreen to the monitorScreen
