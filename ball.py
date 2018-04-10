@@ -1,8 +1,11 @@
 class Ball():
        
-    def __init__(self, inSize):
+    def __init__(self, inSize, inMinY, inMaxY):
         # direction of the ball
         self.size = inSize
+        # min and max position bad can be in the y-axis
+        self.maxY = inMaxY
+        self.minY = inMinY
         # speed of the ball
         self.speed = 0
         # position and direction
@@ -41,8 +44,22 @@ class Ball():
         self.speed = self.speed + increase
     
     def updatePos(self):
+        # update x-axis
         self.posX += self.dirX
-        self.posY += self.dirY
+        # update y-axis
+        # check direction
+        if (self.dirY > 0):
+            # going down
+            if (self.posY + self.dirY < self.maxY):
+                self.posY += self.dirY
+            else:
+                self.posY = self.maxY
+        else:
+            # going up
+            if (self.posY + self.dirY > self.minY):
+                self.posY += self.dirY
+            else:
+                self.posY = self.minY
         
     def updateDir(self, inDirX, inDirY):
         self.dirX = inDirX

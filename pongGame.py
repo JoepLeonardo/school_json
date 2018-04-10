@@ -48,8 +48,10 @@ class PongGame():
     STATE_PLAYER1_SCORED = 1
     STATE_PLAYER2_SCORED = 2
     # all directions
-    DIR_UP = -1
-    DIR_DOWN = 1
+    DIR_UP1 = -1
+    DIR_UP2 = -2
+    DIR_DOWN1 = 1
+    DIR_DOWN2 = 2
     DIR_LEFT = -1
     DIR_RIGHT = 1 
     DIR_NORMAL = 0
@@ -68,7 +70,7 @@ class PongGame():
         # create objects
         self.input = InputHandler()
         self.guiField = GuiField()
-        self.ball = Ball(self.BALL_SIZE)
+        self.ball = Ball(self.BALL_SIZE, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.BALL_SIZE))
         player1PosX = self.guiField.getFieldStartX() + self.SPACE_WALL_PLAYER
         player2PosX = self.guiField.getFieldEndX() -self.SPACE_WALL_PLAYER - self.PLAYER_SIZE_X
         self.player1 = Player(player1PosX, self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
@@ -101,20 +103,32 @@ class PongGame():
 
 
     def ballHitPlayerDir(self, playerY, ballY):
+        # Attention: pMaxHigh is a lower number than pMaxLow,
+        # because the higher the part off the screen, the lower the number
+        pMaxHigh = playerY-self.BALL_SIZE
+        pMaxLow = playerY + self.PLAYER_SIZE_Y
+        step = int((pMaxLow-pMaxHigh)/5)
         dir = self.DIR_NORMAL
-        # check if ball is higher than palyer
-        if ((ballY+self.BALL_SIZE) < playerY):
-            dir = self.DIR_BALL_MISSED
-        # check if the middle of the ball hit upper part of the palyer
-        elif ((ballY+self.BALL_SIZE) <= (playerY+(self.PLAYER_SIZE_Y/3))):
-            dir = self.DIR_UP
-        # check if ball is lower than player
-        elif (ballY > (playerY+self.PLAYER_SIZE_Y)):
-            dir = self.DIR_BALL_MISSED
-        # check if the middle of the ball hit lower part of the palyer
-        elif (ballY >= (playerY+(self.PLAYER_SIZE_Y*2/3))):
-            dir = self.DIR_DOWN
-        # else dir is normal
+        
+        # check if player hit ball
+        if ((ballY < pMaxHigh) or (ballY > pMaxLow)):
+            dir = self.DIR_BALL_MISSED               
+        # check hit is on upper 1/5
+        elif (ballY < (pMaxHigh+(step*1))):
+            dir = self.DIR_UP2
+        # check hit is between 1/5 and 2/5
+        elif (ballY < (pMaxHigh+(step*2))):
+            dir = self.DIR_UP1
+        # check hit is on lower 4/5
+        elif (ballY > (pMaxLow-(step*1))):
+            dir = self.DIR_DOWN2
+        # check hit is between 3/5 and 4/5
+        elif (ballY > (pMaxLow-(step*2))):
+            dir = self.DIR_DOWN1
+        # else hit is between 2/5 and 3/5
+        else:
+            print("middle")
+            
         # return the direction of the ball
         return dir    
 
@@ -134,11 +148,13 @@ class PongGame():
                 dirY_OrBallMissed = self.ballHitPlayerDir(self.player2.getPosY(), self.ball.getPosY())
                 self.ball.increaseSpeed(self.BALL_SPEED_INCREASE)
             #Check ball hits top
-            elif((self.ball.getPosY()+self.ball.getDirY()) == self.guiField.getFieldStartY()):
-                dirY_OrBallMissed = self.DIR_DOWN
+            elif((self.ball.getPosY()+self.ball.getDirY()) <= self.guiField.getFieldStartY()):
+                # invert the direction, from up to down
+                dirY_OrBallMissed = (self.ball.getDirY()*-1)
             #Check ball hits bottom
-            elif((self.ball.getPosY()+self.ball.getDirY()+self.BALL_SIZE) == self.guiField.getFieldEndY()):
-                dirY_OrBallMissed = self.DIR_UP
+            elif((self.ball.getPosY()+self.ball.getDirY()+self.BALL_SIZE) >= self.guiField.getFieldEndY()):
+                # invert the direction, from up to down
+                dirY_OrBallMissed = (self.ball.getDirY()*-1)
             
             #Check if player not missed the ball
             if(dirY_OrBallMissed != self.DIR_BALL_MISSED):
@@ -242,7 +258,7 @@ class PongGame():
                                
                 self.displayGame()
                 
-                print(str(self.DEBUG_LOOP_CNT) + " time " + str(pygame.time.get_ticks()-self.DEBUG_LOOP_START_TIME) + " tick: "+ str(pygame.time.get_ticks()))
+                #print(str(self.DEBUG_LOOP_CNT) + " time " + str(pygame.time.get_ticks()-self.DEBUG_LOOP_START_TIME) + " tick: "+ str(pygame.time.get_ticks()))
                 
                 
                 self.updateGame()
