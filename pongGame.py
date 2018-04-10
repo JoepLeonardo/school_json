@@ -30,19 +30,20 @@ class PongGame():
     DELAY_BEFORE_START = 500
     DELAY_PLAYER_SCORED = 1000
     DELAY_PLAYER_WON = 3000
+    
+    # Spcae between wall and player
+    SPACE_WALL_PLAYER = 50
 
 ###################  END OF SETTINGS  ###################
 #########################################################
     
     # play pong loop
     PLAY_PONG = True
-    
     # game states
     GAME_STATE = None
     STATE_PLAY_NORMAL = 0
     STATE_PLAYER1_SCORED = 1
     STATE_PLAYER2_SCORED = 2
-    
     # all directions
     DIR_UP = -1
     DIR_DOWN = 1
@@ -50,7 +51,6 @@ class PongGame():
     DIR_RIGHT = 1 
     DIR_NORMAL = 0
     DIR_BALL_MISSED = 9
-    
     # maximum points a player can score
     POINTS_MAX = 2
     
@@ -62,8 +62,8 @@ class PongGame():
         # create objects
         self.input = InputHandler()
         self.guiField = GuiField()
-        self.player1 = Player(self.guiField.getFieldStartX(), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
-        self.player2 = Player((self.guiField.getFieldEndX()-self.PLAYER_SIZE_X), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
+        self.player1 = Player((self.guiField.getFieldStartX()+self.SPACE_WALL_PLAYER), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
+        self.player2 = Player((self.guiField.getFieldEndX()-self.PLAYER_SIZE_X-self.SPACE_WALL_PLAYER), self.PLAYER_SIZE_X, self.PLAYER_SIZE_Y, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-self.PLAYER_SIZE_Y))
         ballSpeed = self.BALL_SPEED_NIV1
         if (niveau == 2):
             ballSpeed = self.BALL_SPEED_NIV2
@@ -72,8 +72,8 @@ class PongGame():
         self.ball = Ball(self.BALL_SIZE, ballSpeed)
 
         # creat variables that need info from object(s)
-        self.player1WallX = self.guiField.getFieldStartX() + self.PLAYER_SIZE_X
-        self.player2WallX = self.guiField.getFieldEndX() - self.PLAYER_SIZE_X
+        self.player1WallX = self.player1.getPosX() + self.PLAYER_SIZE_X
+        self.player2WallX = self.player2.getPosX()
         self.fieldHeigtMiddle = (((int)(self.guiField.getFieldHeight()/2)))
         self.fieldWidthMiddle = (((int)(self.guiField.getFieldWidth()/2)))
         
@@ -82,7 +82,7 @@ class PongGame():
 
     def resetGame(self):
         # Reset the ball
-        self.ball.reset(self.fieldWidthMiddle, self.fieldHeigtMiddle-(int(self.BALL_SIZE/2)), self.DIR_RIGHT, self.DIR_NORMAL)
+        self.ball.reset(self.fieldWidthMiddle+750, self.fieldHeigtMiddle-(int(self.BALL_SIZE/2)), self.DIR_RIGHT, self.DIR_NORMAL)
         # Reset players
         self.player1.reset(self.fieldHeigtMiddle-(int(self.PLAYER_SIZE_Y/2)))
         self.player2.reset(self.fieldHeigtMiddle-(int(self.PLAYER_SIZE_Y/2)))
