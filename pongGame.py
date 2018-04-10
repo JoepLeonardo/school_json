@@ -58,6 +58,7 @@ class PongGame():
     DEBUG_MAIN_LOOP_CNT = 0
     
     def __init__(self, niveau):
+        pygame.init()
         # create objects
         self.input = InputHandler()
         self.guiField = GuiField()
@@ -243,13 +244,6 @@ class PongGame():
             #print(str(self.DEBUG_MAIN_LOOP_CNT) + " tick1 " + str(pygame.time.get_ticks()-1))
             
             clock.tick(30)
-            
-        # end of programm
-        #del self.guiField
-        #del self.player1
-        #del self.player2
-        #del self.ball
-        #pygame.quit
             
 
 

@@ -28,9 +28,9 @@ class DisplayOnMonitor:
         # create surface screen where all items are going to be displayed on
         self.surfaceScreen = pygame.Surface((self.SURFACE_WIDTH, self.SURFACE_HEIGHT))      
            
-    def __del__(self):
+    #def __del__(self):
         # close the display
-        pygame.display.quit()
+        #pygame.display.quit()
             
     def emptySurfaceScreen(self):
         # make the surface black

@@ -21,6 +21,7 @@ class GuiMenu(DisplayOnMonitor):
     NIVEAU_SIZE = 70
           
     def __init__(self):
+        pygame.init()
         DisplayOnMonitor.__init__(self)
         # clear the current screen
         self.emptySurfaceScreen()
@@ -75,7 +76,6 @@ class GuiMenu(DisplayOnMonitor):
                 elif (event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN):
                     action = self.niveau
                     self.continueShow = False
-                    print("enterr")
         # end of while, return menu choice
         return action
                     

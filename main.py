@@ -1,3 +1,5 @@
+import pygame
+from pygame.locals import *
 from guiMenu import GuiMenu
 from pongGame import PongGame
 from subprocess import call
@@ -6,13 +8,13 @@ playGame = True
 while playGame:
     menu = GuiMenu()
     action = menu.handleMenu()
-    del menu
     if (action != 0):
         game = PongGame(action)
         game.playPong()
-        del game
     else:
         playGame = False
 
-# shutdown pi
+# end of program
+pygame.quit()
+# shutdown rpi
 #call("sudo shutdown -h now", shell=True)
