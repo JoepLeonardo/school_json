@@ -36,6 +36,9 @@ class Ball():
     def getSpeed(self):
         return self.speed
     
+    def increaseSpeed(self, increase):
+        self.speed = self.speed + increase
+    
     def updatePos(self):
         self.posX += self.dirX
         self.posY += self.dirY

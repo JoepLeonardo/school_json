@@ -26,6 +26,9 @@ class PongGame():
     BALL_SPEED_NIV2 = 30
     BALL_SPEED_NIV3 = 45
     
+    # Ball speed increasement after hit with player
+    BALL_SPEED_INCREASE = 1
+    
     # Time before the game starts (ms)
     DELAY_BEFORE_START = 500
     DELAY_PLAYER_SCORED = 1000
@@ -123,10 +126,12 @@ class PongGame():
             if((self.ball.getPosX()+self.ball.getDirX()) == self.player1WallX):
                 ballDirX = self.DIR_RIGHT
                 dirY_OrBallMissed = self.ballHitPlayerDir(self.player1.getPosY(), self.ball.getPosY())
+                self.ball.increaseSpeed(self.BALL_SPEED_INCREASE)
             #Check ball hits wall player2
             elif((self.ball.getPosX()+self.ball.getDirX()+self.BALL_SIZE) == self.player2WallX):
                 ballDirX = self.DIR_LEFT
                 dirY_OrBallMissed = self.ballHitPlayerDir(self.player2.getPosY(), self.ball.getPosY())
+                self.ball.increaseSpeed(self.BALL_SPEED_INCREASE)
             #Check ball hits top
             elif((self.ball.getPosY()+self.ball.getDirY()) == self.guiField.getFieldStartY()):
                 dirY_OrBallMissed = self.DIR_DOWN
