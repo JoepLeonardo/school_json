@@ -54,8 +54,8 @@ class PongGame():
     DIR_RIGHT = 1 
     DIR_NORMAL = 0
     DIR_BALL_MISSED = 9
-    # maximum points a player can score
-    POINTS_MAX = 2
+    # maximum points a player can score (guiField display's until 3)
+    POINTS_MAX = 3
     
     # debug variables
     DEBUG_MAIN_LOOP_CNT = 0
@@ -85,7 +85,7 @@ class PongGame():
 
     def resetGame(self):
         # Reset the ball
-        self.ball.reset(self.fieldWidthMiddle+750, self.fieldHeigtMiddle-(int(self.BALL_SIZE/2)), self.DIR_RIGHT, self.DIR_NORMAL)
+        self.ball.reset(self.fieldWidthMiddle, self.fieldHeigtMiddle-(int(self.BALL_SIZE/2)), self.DIR_RIGHT, self.DIR_NORMAL)
         # Reset players
         self.player1.reset(self.fieldHeigtMiddle-(int(self.PLAYER_SIZE_Y/2)))
         self.player2.reset(self.fieldHeigtMiddle-(int(self.PLAYER_SIZE_Y/2)))
