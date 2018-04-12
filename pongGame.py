@@ -22,9 +22,6 @@ class PongGame():
 
     # Set ball size
     BALL_SIZE = PLAYER_SIZE_X
-    BALL_SPEED_NIV1 = 10
-    BALL_SPEED_NIV2 = 20
-    BALL_SPEED_NIV3 = 30
     
     # Ball speed increasement after hit with player
     BALL_SPEED_INCREASE = 1
@@ -115,20 +112,18 @@ class PongGame():
             dir = self.DIR_BALL_MISSED               
         # check hit is on upper 1/5
         elif (ballY < (pMaxHigh+(step*1))):
-            dir = self.DIR_UP2
+            dir = self.DIR_UP1
         # check hit is between 1/5 and 2/5
         elif (ballY < (pMaxHigh+(step*2))):
             dir = self.DIR_UP1
         # check hit is on lower 4/5
         elif (ballY > (pMaxLow-(step*1))):
-            dir = self.DIR_DOWN2
+            dir = self.DIR_DOWN1
         # check hit is between 3/5 and 4/5
         elif (ballY > (pMaxLow-(step*2))):
             dir = self.DIR_DOWN1
         # else hit is between 2/5 and 3/5
-        else:
-            print("middle")
-            
+                  
         # return the direction of the ball
         return dir    
 

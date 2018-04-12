@@ -35,14 +35,14 @@ time.sleep(0.01)
 print("Start")
 try:
     while True:
-        time.sleep(1)
-       #print("OFF : ", (GPIO.input(PIN_OFF)))
-       # print("SLCT: ", (GPIO.input(PIN_SELECT)))
-        #print("NEXT: ", (GPIO.input(PIN_NEXT)))
-        #print("PREV: ", (GPIO.input(PIN_PREV)))
+        time.sleep(0.5)
+        print("OFF : ", (GPIO.input(PIN_OFF)))
+        print("SLCT: ", (GPIO.input(PIN_SELECT)))
+        print("NEXT: ", (GPIO.input(PIN_NEXT)))
+        print("PREV: ", (GPIO.input(PIN_PREV)))
                 
-        print("J0 ",(GPIO.input(J0_0), GPIO.input(J0_1), GPIO.input(J0_2)) )
-        #print("J1 ",(GPIO.input(J1_0), GPIO.input(J1_1), GPIO.input(J1_2)) )
+        #print("J0 ",(GPIO.input(J0_0), GPIO.input(J0_1), GPIO.input(J0_2)) )
+        print("J1 ",(GPIO.input(J1_0), GPIO.input(J1_1), GPIO.input(J1_2)) )
         
         #print("")       
 except KeyboardInterrupt: #stop when cntrl+c is pressed

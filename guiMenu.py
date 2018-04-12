@@ -1,4 +1,5 @@
 from displayOnMonitor import DisplayOnMonitor
+from inputHandler import InputHandler
 import pygame
 from pygame.locals import *
 
@@ -23,6 +24,8 @@ class GuiMenu(DisplayOnMonitor):
     def __init__(self):
         pygame.init()
         DisplayOnMonitor.__init__(self)
+        # create object(s)
+        self.input = InputHandler()
         # clear the current screen
         self.emptySurfaceScreen()
          # show the drawings
@@ -57,15 +60,18 @@ class GuiMenu(DisplayOnMonitor):
         self.drawText(('< '+ text + ' >'), self.NIVEAU_SIZE, True, self.TEXT_IN_THE_MIDDLE, self.HEIGHT_NIV)
         # show the drawings
         self.display()
+    
+    def handleConsoleinput(self):
+        data = self.input.getConsole()
+        if (data == self.input.DATA_OFF):
+            self.continueShow = False
         
     def handleMenu(self):
         action = 0
         while (self.continueShow):
+            self.handleConsoleinput()
             for event in pygame.event.get():
-                if (event.type == QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE)):
-                    action = 0
-                    self.continueShow = False
-                elif (event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT):
+                if (event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT):
                     if (self.niveau > self.NIVEAU_MIN):
                         self.niveau = self.niveau - 1
                     self.drawNiv(self.niveau)
