@@ -7,7 +7,7 @@ pygame.init()
 class InputHandler():
     
     # GPIO pins
-    PIN_OFF = 5
+    PIN_POWER_OFF = 5
     PIN_SELECT = 19
     PIN_NEXT = 13
     PIN_PREV = 26
@@ -20,7 +20,7 @@ class InputHandler():
     
     # values
     DATA_NONE = 0
-    DATA_OFF = 1
+    DATA_POWER_OFF = 1
     DATA_SELECT = 2
     DATA_NEXT = 3
     DATA_PREV = 4
@@ -29,7 +29,7 @@ class InputHandler():
         # Use pinout from BCM
         GPIO.setmode(GPIO.BCM)
         # Set all pins as input
-        GPIO.setup(self.PIN_OFF, GPIO.IN)
+        GPIO.setup(self.PIN_POWER_OFF, GPIO.IN)
         GPIO.setup(self.PIN_SELECT, GPIO.IN)
         GPIO.setup(self.PIN_PREV, GPIO.IN)
         GPIO.setup(self.PIN_NEXT, GPIO.IN)
@@ -41,14 +41,13 @@ class InputHandler():
         GPIO.setup(self.PIN_J1_2, GPIO.IN)
     
     def __del__(self):
-        GPIO.cleanup()
-        print("exit")
+        print("exit inputHandler")
     
     def getConsole(self):
         # Returns the pin that's pressed
         data = self.DATA_NONE 
-        if (GPIO.input(self.PIN_OFF)):
-            data = self.DATA_OFF
+        if (GPIO.input(self.PIN_POWER_OFF)):
+            data = self.DATA_POWER_OFF
         elif (GPIO.input(self.PIN_SELECT)):
             data = self.DATA_SELECT
         elif (GPIO.input(self.PIN_NEXT)):

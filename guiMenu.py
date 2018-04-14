@@ -2,6 +2,7 @@ from displayOnMonitor import DisplayOnMonitor
 from inputHandler import InputHandler
 import pygame
 from pygame.locals import *
+import time
 
 pygame.init()
 
@@ -9,81 +10,76 @@ class GuiMenu(DisplayOnMonitor):
     
     # display height
     HEIGHT_HEAD = (DisplayOnMonitor.SURFACE_HEIGHT*2/6)
-    HEIGHT_NIV = (DisplayOnMonitor.SURFACE_HEIGHT*4/6)
-    
+    HEIGHT_ITEM1 = (DisplayOnMonitor.SURFACE_HEIGHT*4/6)
+    HEIGHT_ITEM2 = (DisplayOnMonitor.SURFACE_HEIGHT*5/6)
     # settings for the game from menu (can't add more niveaus here)
     HEAD_NAME = 'Pong 2D'
     HEAD_SIZE = 200
-    NIVEAU_MIN = 1
-    NIVEAU_MAX = 3
-    NIVEAU1_NAME = 'easy'
-    NIVEAU2_NAME = 'medium'
-    NIVEAU3_NAME = 'hard'
-    NIVEAU_SIZE = 70
+    ITEM_PLAY_NAME = 'Play'
+    ITEM_SETTINGS_NAME = 'Settings'
+    ITEM_SIZE = 70
+    # Menu state
+    GAME_STATE = None
+    STATE_PLAY = 10
+    STATE_SETTINGS = 11
+    STATE_RETURN = 12
+    STATE_POWER_OFF = 13
+    # Delay (ms)
+    DELAY_BETWEEN_INPUT = 300
+    
           
     def __init__(self):
-        pygame.init()
-        DisplayOnMonitor.__init__(self)
         # create object(s)
-        self.input = InputHandler()
-        # clear the current screen
-        self.emptySurfaceScreen()
-         # show the drawings
-        self.display()
+        self.input = InputHandler()        
         # settings
         self.continueShow = True
-        self.niveau = self.NIVEAU_MIN
-        # draw the menu
-        self.drawNiv(self.niveau)
-                    
-    def drawHead(self):
-        self.drawText(self.HEAD_NAME, self.HEAD_SIZE, True, self.TEXT_IN_THE_MIDDLE, self.HEIGHT_HEAD)
-        
-    def getNivName(self, niveau):
-        text = ''
-        if (niveau == self.NIVEAU_MIN):
-            text = self.NIVEAU1_NAME
-        elif (niveau == self.NIVEAU_MAX):
-            text = self.NIVEAU3_NAME
-        else:
-            text = self.NIVEAU2_NAME
-        return text
-        
-    def drawNiv(self, niveau):
-        # get the niveau text
-        text = self.getNivName(niveau)        
+        GAME_STATE = self.STATE_PLAY
+    
+    def __del__(self):
+        print("exit guiMenu")
+    
+    def reset(self):
+        DisplayOnMonitor.__init__(self)
+        self.continueShow = True
+                                            
+    def drawMenu(self):
         # clear the current screen
         self.emptySurfaceScreen()
         # draw the head text
-        self.drawHead()
-        # draw the niveau
-        self.drawText(('< '+ text + ' >'), self.NIVEAU_SIZE, True, self.TEXT_IN_THE_MIDDLE, self.HEIGHT_NIV)
+        self.drawTextMiddle(self.HEAD_NAME, self.HEAD_SIZE, self.HEIGHT_HEAD, False)
+        # draw items
+        if (self.GAME_STATE == self.STATE_PLAY):
+            self.drawTextMiddle(self.ITEM_PLAY_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM1, True)
+            self.drawTextMiddle(self.ITEM_SETTINGS_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM2, False)
+        else:
+            self.drawTextMiddle(self.ITEM_PLAY_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM1, False)
+            self.drawTextMiddle(self.ITEM_SETTINGS_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM2, True)
         # show the drawings
         self.display()
-    
-    def handleConsoleinput(self):
-        data = self.input.getConsole()
-        if (data == self.input.DATA_OFF):
-            self.continueShow = False
-        
+                   
     def handleMenu(self):
-        action = 0
+        self.reset()
+        # draw the menu
+        self.drawMenu()
+        data = self.input.DATA_NONE        
         while (self.continueShow):
-            self.handleConsoleinput()
-            for event in pygame.event.get():
-                if (event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT):
-                    if (self.niveau > self.NIVEAU_MIN):
-                        self.niveau = self.niveau - 1
-                    self.drawNiv(self.niveau)
-                elif (event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT):
-                    if (self.niveau < self.NIVEAU_MAX):
-                        self.niveau = self.niveau + 1
-                    self.drawNiv(self.niveau)
-                elif (event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN):
-                    action = self.niveau
-                    self.continueShow = False
+            data = self.input.getConsole()
+            
+            if (data == self.input.DATA_POWER_OFF):
+                self.GAME_STATE = self.STATE_POWER_OFF
+                self.continueShow = False                
+            elif ((data == self.input.DATA_PREV) or (data == self.input.DATA_NEXT)):
+                if (self.GAME_STATE != self.STATE_PLAY):
+                    self.GAME_STATE = self.STATE_PLAY
+                else:
+                    self.GAME_STATE = self.STATE_SETTINGS
+                self.drawMenu()
+            elif (data == self.input.DATA_SELECT):
+                self.continueShow = False
+                
+            pygame.time.delay(self.DELAY_BETWEEN_INPUT)                    
         # end of while, return menu choice
-        return (action*10)
+        return (self.GAME_STATE)
                     
                     
 

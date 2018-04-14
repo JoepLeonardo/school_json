@@ -1,20 +1,39 @@
 import pygame
 from pygame.locals import *
 from guiMenu import GuiMenu
+from guiSettings import GuiSettings
 from pongGame import PongGame
 from subprocess import call
 
+# Here so settings stay remembered
+settings = GuiSettings()
+menu = GuiMenu()
+
 playGame = True
 while playGame:
-    menu = GuiMenu()
+    # get action from menu
     action = menu.handleMenu()
-    if (action != 0):
-        game = PongGame(action)
+    # check if game needs to start
+    if (action == menu.STATE_PLAY):
+        # create game
+        game = PongGame(10)
+        # play game
         game.playPong()
-    else:
+        # delete game
+        del game
+    # check if settings needs to be openend
+    elif (action == menu.STATE_SETTINGS):
+        settings.handleMenu()
+    # check if console must shut down
+    elif (action == menu.STATE_POWER_OFF):
         playGame = False
-
+    else:
+        print("unknown state, exit")
+        playGame = False
+        
 # end of program
 pygame.quit()
+del menu
+del settings
 # shutdown rpi
 #call("sudo shutdown -h now", shell=True)

@@ -60,7 +60,7 @@ class DisplayOnMonitor:
     # remove a rect
     def removeRect(self, posX, posY, width, height):
         pygame.draw.rect(self.surfaceScreen, self.COLOR_BLACK, pygame.Rect(posX, posY, width, height))
-    
+           
     def drawText(self, text, size, bold, x, y):
         # Create the text on a surface
         myfont = pygame.font.SysFont(self.FONT, size, bold)
@@ -70,7 +70,16 @@ class DisplayOnMonitor:
             x = (self.SURFACE_WIDTH/2) - (surfaceText.get_width()/2)
         # Put text on surfaceScreen
         self.surfaceScreen.blit(surfaceText,(x, y))
-                        
+        
+    def drawTextMiddle(self, text, size, heigth, selected):
+        # if text is selected add '<' and '>' around
+        if (selected):
+            text = ('< ' + text + ' >')
+        self.drawText(text, size, True, self.TEXT_IN_THE_MIDDLE, heigth)
+    
+    ###############################################
+    # OTHER FUNCTIONS
+
     # display the surface on the monitor
     def display(self):
         # adjust and update the surfaceScreen to the monitorScreen

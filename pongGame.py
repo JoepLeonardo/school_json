@@ -78,11 +78,8 @@ class PongGame():
         self.player1WallX = self.player1.getPosX() + self.PLAYER_SIZE_X
         self.player2WallX = self.player2.getPosX()
         self.fieldHeigtMiddle = (((int)(self.guiField.getFieldHeight()/2)))
-        self.fieldWidthMiddle = (((int)(self.guiField.getFieldWidth()/2)))
+        self.fieldWidthMiddle = (((int)(self.guiField.getFieldWidth()/2)))        
         
-        # reset the game so all variables are declared right
-        self.resetGame()
-
     def resetGame(self):
         # Reset the ball
         self.ball.reset(self.fieldWidthMiddle, self.fieldHeigtMiddle-(int(self.BALL_SIZE/2)), self.DIR_RIGHT, self.DIR_NORMAL, self.ballStartSpeed)
@@ -237,6 +234,8 @@ class PongGame():
             self.resetGame()
 
     def playPong(self):
+        # reset the game so all variables are declared right
+        self.resetGame()
         # play pong 
         while self.PLAY_PONG:
             # debug timer info
