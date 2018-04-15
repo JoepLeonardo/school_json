@@ -40,8 +40,8 @@ class InputHandler():
         GPIO.setup(self.PIN_J1_1, GPIO.IN)
         GPIO.setup(self.PIN_J1_2, GPIO.IN)
     
-    def __del__(self):
-        print("exit inputHandler")
+    #def __del__(self):
+        #print("exit inputHandler")
     
     def getConsole(self):
         # Returns the pin that's pressed

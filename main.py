@@ -24,11 +24,16 @@ while playGame:
     # check if settings needs to be openend
     elif (action == menu.STATE_SETTINGS):
         settings.handleMenu()
+        print("ball speed:    " + str(settings.getBallSpeed()))
+        print("ball size:     " + str(settings.getBallSize()))
+        print("player width:  " + str(settings.getPlayerWidth()))
+        print("player height: " + str(settings.getPlayerHeight()))
+        print("")
     # check if console must shut down
     elif (action == menu.STATE_POWER_OFF):
         playGame = False
     else:
-        print("unknown state, exit")
+        print("unknown menu state, exit")
         playGame = False
         
 # end of program

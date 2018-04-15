@@ -33,14 +33,14 @@ class GuiMenu(DisplayOnMonitor):
         self.input = InputHandler()        
         # settings
         self.continueShow = True
-        GAME_STATE = self.STATE_PLAY
     
-    def __del__(self):
-        print("exit guiMenu")
+    #def __del__(self):
+        #print("exit guiMenu")
     
     def reset(self):
         DisplayOnMonitor.__init__(self)
         self.continueShow = True
+        self.GAME_STATE = self.STATE_PLAY
                                             
     def drawMenu(self):
         # clear the current screen
@@ -61,7 +61,6 @@ class GuiMenu(DisplayOnMonitor):
         self.reset()
         # draw the menu
         self.drawMenu()
-        data = self.input.DATA_NONE        
         while (self.continueShow):
             data = self.input.getConsole()
             

@@ -64,7 +64,7 @@ class DisplayOnMonitor:
     def drawText(self, text, size, bold, x, y):
         # Create the text on a surface
         myfont = pygame.font.SysFont(self.FONT, size, bold)
-        surfaceText = myfont.render(text, False, self.COLOR_WHITE)
+        surfaceText = myfont.render(text, False, self.COLOR_WHITE, self.COLOR_BLACK)
         # Check if text needs to be placed in the middle of the x-axis
         if (x==self.TEXT_IN_THE_MIDDLE):
             x = (self.SURFACE_WIDTH/2) - (surfaceText.get_width()/2)
