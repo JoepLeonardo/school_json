@@ -174,10 +174,14 @@ class GuiSettings(DisplayOnMonitor):
                     self.playerHeight= self.handleItem(self.ITEM_PLAYER_HEIGHT_NAME, self.playerHeight, self.ITEM_PLAYER_HEIGHT_HEIGHT, self.ITEM_LARGE_FACTOR)
                 # Check to reset settings
                 elif (self.GAME_STATE == self.STATE_RESET):
+                    # Reset all settings
                     self.ballSpeed = self.ITEM_BALL_SPEED_DEFAULT
                     self.ballSize = self.ITEM_BALL_SIZE_DEFAULT
                     self.playerWidth = self.ITEM_PLAYER_WIDTH_DEFAULT
-                    self.playerHeight = self.ITEM_PLAYER_HEIGHT_DEFAULT                    
+                    self.playerHeight = self.ITEM_PLAYER_HEIGHT_DEFAULT
+                    # Change state to give feedback so user knows button was pressed
+                    self.GAME_STATE = self.STATE_BALL_SPEED
+                    self.drawMenuAndDisplay()
                 # Check to exit settings menu
                 elif (self.GAME_STATE == self.STATE_EXIT):
                     # exit settings menu
