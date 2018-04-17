@@ -16,7 +16,7 @@ while playGame:
     # check if game needs to start
     if (action == menu.STATE_PLAY):
         # create game
-        game = PongGame(10)
+        game = PongGame(settings.getBallSpeed(), settings.getBallSize(), settings.getPlayerWidth(), settings.getPlayerHeight())
         # play game
         game.playPong()
         # delete game
@@ -24,11 +24,6 @@ while playGame:
     # check if settings needs to be openend
     elif (action == menu.STATE_SETTINGS):
         settings.handleMenu()
-        print("ball speed:    " + str(settings.getBallSpeed()))
-        print("ball size:     " + str(settings.getBallSize()))
-        print("player width:  " + str(settings.getPlayerWidth()))
-        print("player height: " + str(settings.getPlayerHeight()))
-        print("")
     # check if console must shut down
     elif (action == menu.STATE_POWER_OFF):
         playGame = False
@@ -41,4 +36,4 @@ pygame.quit()
 del menu
 del settings
 # shutdown rpi
-#call("sudo shutdown -h now", shell=True)
+#call("sudo shutdown -h now", shell=True)+
