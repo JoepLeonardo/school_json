@@ -124,7 +124,8 @@ class InputHandler():
         # controller recognizes 3 steps up and 4 down, last step down must be removed
         if (data == -4):
             data = -3
-        return data
+        # DEBUG RETURN because so controller doesn't need to be connected
+        return 0
             
             
     
