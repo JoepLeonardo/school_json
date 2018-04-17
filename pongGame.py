@@ -25,8 +25,10 @@ class PongGame():
     DELAY_BEFORE_START = 500
     DELAY_PLAYER_SCORED = 1000
     DELAY_PLAYER_WON = 3000    
-    # Spcae between wall and player
+    # Space between wall and player
     SPACE_WALL_PLAYER = 50
+    # Sensitivity of the controllers (px's moved per step)
+    CONTROLLER_SENSITIVITY = 10
     
     # Game states
     GAME_STATE = None
@@ -167,17 +169,12 @@ class PongGame():
             self.ball.updatePos()
         
     def handleControllerInput(self):
-        pixelsToMove = 20
         # update player1 pos
-        data = self.input.getController1()
-        if (data != 0):
-            print("data1 " + str(data))
-        self.player1.move((data*pixelsToMove));
+        data = self.input.getController1()        
+        self.player1.move((data*self.CONTROLLER_SENSITIVITY));
         # update player2 pos
         data = self.input.getController2()
-        if (data != 0):
-            print("data2 " + str(data))
-        self.player2.move((data*pixelsToMove));
+        self.player2.move((data*self.CONTROLLER_SENSITIVITY));
         
     def handleInput(self):
         pixelsToMove = 20
@@ -244,7 +241,7 @@ class PongGame():
             
             if (self.GAME_STATE == self.STATE_PLAY_NORMAL):
                 # handle controller input
-                #self.handleControllerInput()  Can only be implemented when controllers are done
+                self.handleControllerInput()
                 self.displayGame()
                 self.updateGame()
             elif (self.GAME_STATE == self.STATE_PLAYER1_SCORED):

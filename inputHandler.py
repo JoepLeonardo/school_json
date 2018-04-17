@@ -25,6 +25,7 @@ class InputHandler():
     DATA_SELECT = 2
     DATA_NEXT = 3
     DATA_PREV = 4
+    JOYSTICK_IDLE = 4
     
     def callBackButtonPressed(self, channel):
         if (GPIO.input(self.PIN_POWER_OFF)):
@@ -73,7 +74,7 @@ class InputHandler():
         self.setInterrupts()
         
     #def __del__(self):
-        print("exit inputHandler")
+        #print("exit inputHandler")
     
     def getConsole(self):
         # Returns the pin thats pressed
@@ -93,25 +94,36 @@ class InputHandler():
         return data
                 
     def getController1(self):
-        data = 0
-        for event in pygame.event.get():
-            # Check if 'w' button is pressed
-            if (event.type == pygame.KEYDOWN and event.key == pygame.K_w):
-                data = -1
-            # Check if 's' button is pressed
-            elif (event.type == pygame.KEYDOWN and event.key == pygame.K_s):
-                data = 1
-        return data
+        # data minus joystick idle value
+        data = (self.JOYSTICK_IDLE*-1)
+        # add controller values to data
+        if(GPIO.input(self.PIN_J0_0)):
+            data += 1
+        if (GPIO.input(self.PIN_J0_1)):
+            data += 2
+        if (GPIO.input(self.PIN_J0_2)):
+            data += 4
+        # controller recognizes 3 steps up and 4 down, last step down must be removed
+        if (data == -4):
+            data = -3
+        #return data
+        # DEBUG RETURN because only 1 controller is ready yet and
+        # DEBUG RETURN because console board has a fault
+        return 0
                 
     def getController2(self):
-        data = 0
-        for event in pygame.event.get():
-            # Check if 'up' button is pressed
-            if (event.type == pygame.KEYDOWN and event.key == pygame.K_UP):
-                data = -1
-            # Check if 'down' button is pressed
-            elif (event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN):
-                data = 1
+        # data minus joystick idle value
+        data = (self.JOYSTICK_IDLE*-1)
+        # add controller values to data
+        if(GPIO.input(self.PIN_J1_0)):
+            data += 1
+        if (GPIO.input(self.PIN_J1_1)):
+            data += 2
+        if (GPIO.input(self.PIN_J1_2)):
+            data += 4
+        # controller recognizes 3 steps up and 4 down, last step down must be removed
+        if (data == -4):
+            data = -3
         return data
             
             
