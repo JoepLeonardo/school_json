@@ -6,6 +6,7 @@ import pygame
 from pygame.locals import *
 import sys
 import time
+import random
 
 # pygame init
 pygame.init()
@@ -35,13 +36,11 @@ class PongGame():
     STATE_PLAY_NORMAL = 0
     STATE_PLAYER1_SCORED = 1
     STATE_PLAYER2_SCORED = 2
-    # All directions (opposites must be inverted)
-    DIR_UP1 = -0.3
-    DIR_DOWN1 = 0.3
+    # Directions (opposites must be inverted)
     DIR_LEFT = -1
-    DIR_RIGHT = 1 
+    DIR_RIGHT = (DIR_LEFT*-1) 
     DIR_NORMAL = 0
-    DIR_MAX = 2    
+    DIR_MAX = 2.0    
     
     # debug variables
     DEBUG_LOOP_CNT = 0
@@ -63,14 +62,36 @@ class PongGame():
         # create variables
         self.ballStartSpeed = ballSpeed
         self.fieldHeigtMiddle = (((int)(self.guiField.getFieldHeight()/2)))
-        self.fieldWidthMiddle = (((int)(self.guiField.getFieldWidth()/2)))        
+        self.fieldWidthMiddle = (((int)(self.guiField.getFieldWidth()/2)))
+    
+    def ballDirRandomHorizontal(self):
+        dir = self.DIR_NORMAL
+        if (self.GAME_STATE == self.STATE_PLAYER1_SCORED):
+            dir = self.DIR_LEFT
+        elif (self.GAME_STATE == self.STATE_PLAYER2_SCORED):
+            dir = self.DIR_RIGHT
+        # random left or right
+        else:            
+            if (bool(random.getrandbits(1))):
+                dir = self.DIR_RIGHT
+            else:
+                dir = self.DIR_LEFT
+        return dir
+    
+    def ballDirRandomVertical(self):
+        # random direction between half the maximum
+        dir = self.DIR_MAX/4        
+        dir = float(random.uniform((dir*-1), dir))
+        return dir
         
     def resetGame(self):
         # Reset the ball
-        self.ball.reset(self.fieldWidthMiddle, self.fieldHeigtMiddle-(int(self.ball.getSize()/2)), self.DIR_RIGHT, self.DIR_NORMAL, self.ballStartSpeed)
+        ballPosY = self.fieldHeigtMiddle-(int(self.ball.getSize()/2))
+        self.ball.reset(self.fieldWidthMiddle, ballPosY, self.ballDirRandomHorizontal(), self.ballDirRandomVertical(), self.ballStartSpeed)
         # Reset players
-        self.player1.reset(self.fieldHeigtMiddle-(int(self.player1.getHeight()/2)))
-        self.player2.reset(self.fieldHeigtMiddle-(int(self.player2.getHeight()/2)))
+        playerPosY = self.fieldHeigtMiddle-(int(self.player1.getHeight()/2))
+        self.player1.reset(playerPosY)
+        self.player2.reset(playerPosY)
         # Draw the field and score
         self.guiField.drawFieldAndScore(self.player1.getPoints(), self.player2.getPoints())
         # Game state to noraml

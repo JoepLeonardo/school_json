@@ -9,10 +9,10 @@ class Ball():
         # speed of the ball
         self.speed = 0
         # position and direction
-        self.posX = float(0.1)
-        self.posY = float(0.1)
-        self.dirX = float(0.1)
-        self.dirY = float(0.1)
+        self.posX = float(0.0)
+        self.posY = float(0.0)
+        self.dirX = float(0.0)
+        self.dirY = float(0.0)
     
     def reset(self, inX, inY, inDirX, inDirY, inSpeed):
         # all variable(s) that need te be set at the begin of each game
