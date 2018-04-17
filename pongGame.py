@@ -33,7 +33,7 @@ class PongGame():
     STATE_PLAY_NORMAL = 0
     STATE_PLAYER1_SCORED = 1
     STATE_PLAYER2_SCORED = 2
-    # All directions
+    # All directions (opposites must be inverted)
     DIR_UP1 = -1
     DIR_UP2 = -2
     DIR_DOWN1 = 1
@@ -41,8 +41,6 @@ class PongGame():
     DIR_LEFT = -1
     DIR_RIGHT = 1 
     DIR_NORMAL = 0
-    DIR_BALL_MISSED = 9
-    
     
     # debug variables
     DEBUG_LOOP_CNT = 0
@@ -60,10 +58,8 @@ class PongGame():
         self.player1 = Player(player1PosX, playerWidth, playerHeight, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-playerHeight))
         self.player2 = Player(player2PosX, playerWidth, playerHeight, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-playerHeight))
                 
-        # create variables that need info from object(s)
+        # create variables
         self.ballStartSpeed = ballSpeed
-        self.player1WallX = self.player1.getPosX() + playerWidth
-        self.player2WallX = self.player2.getPosX()
         self.fieldHeigtMiddle = (((int)(self.guiField.getFieldHeight()/2)))
         self.fieldWidthMiddle = (((int)(self.guiField.getFieldWidth()/2)))        
         
@@ -82,72 +78,90 @@ class PongGame():
         # Wait before the game starts
         pygame.time.delay(self.DELAY_BEFORE_START)
 
+    def playerHitBall(self, playerY, ballY):
+        # Attention: function only checks hit on y-axis 
+        playerHitBall = True        
+        # Check if player missed ball ( (ball above player) or (ball below player) )
+        if (((ballY+self.ball.getSize()) < playerY) or (ballY > (playerY + self.player1.getHeight()))):
+            playerHitBall= False
+        return playerHitBall
 
-    def ballHitPlayerDir(self, playerY, ballY):
-        # Attention: pMaxHigh is a lower number than pMaxLow,
+    def playerHitBallDir(self, playerY, ballY):
+        # Attention: playerMaxHigh is a lower number than playerMaxLow,
         # because the higher the part off the screen, the lower the number
-        pMaxHigh = playerY-self.ball.getSize()
-        pMaxLow = playerY + self.player1.getHeight()
-        step = int((pMaxLow-pMaxHigh)/5)
-        dir = self.DIR_NORMAL
+        playerMaxHigh = playerY-self.ball.getSize()
+        playerMaxLow = playerY + self.player1.getHeight()
+        step = int((playerMaxLow-playerMaxHigh)/5)
+        dirY = self.DIR_NORMAL
         
-        # check if player hit ball
-        if ((ballY < pMaxHigh) or (ballY > pMaxLow)):
-            dir = self.DIR_BALL_MISSED               
         # check hit is on upper 1/5
-        elif (ballY < (pMaxHigh+(step*1))):
-            dir = self.DIR_UP1
+        if (ballY < (playerMaxHigh+(step*1))):
+            dirY = self.DIR_UP1
         # check hit is between 1/5 and 2/5
-        elif (ballY < (pMaxHigh+(step*2))):
-            dir = self.DIR_UP1
+        elif (ballY < (playerMaxHigh+(step*2))):
+            dirY = self.DIR_UP1
         # check hit is on lower 4/5
-        elif (ballY > (pMaxLow-(step*1))):
-            dir = self.DIR_DOWN1
+        elif (ballY > (playerMaxLow-(step*1))):
+            dirY = self.DIR_DOWN1
         # check hit is between 3/5 and 4/5
-        elif (ballY > (pMaxLow-(step*2))):
-            dir = self.DIR_DOWN1
-        # else hit is between 2/5 and 3/5
-                  
-        # return the direction of the ball
-        return dir    
-
-    def updateGame(self):
-        for loopCnt in range(0, self.ball.getSpeed()):
-            ballDirX = self.ball.getDirX()
-            dirY_OrBallMissed = self.ball.getDirY()
-            
-            #Check ball hits wall player1
-            if((self.ball.getPosX()+self.ball.getDirX()) == self.player1WallX):
-                ballDirX = self.DIR_RIGHT
-                dirY_OrBallMissed = self.ballHitPlayerDir(self.player1.getPosY(), self.ball.getPosY())
-                self.ball.increaseSpeed(self.BALL_SPEED_INCREASE)
-            #Check ball hits wall player2
-            elif((self.ball.getPosX()+self.ball.getDirX()+self.ball.getSize()) == self.player2WallX):
-                ballDirX = self.DIR_LEFT
-                dirY_OrBallMissed = self.ballHitPlayerDir(self.player2.getPosY(), self.ball.getPosY())
-                self.ball.increaseSpeed(self.BALL_SPEED_INCREASE)
-            #Check ball hits top
-            elif((self.ball.getPosY()+self.ball.getDirY()) <= self.guiField.getFieldStartY()):
-                # invert the direction, from up to down
-                dirY_OrBallMissed = (self.ball.getDirY()*-1)
-            #Check ball hits bottom
-            elif((self.ball.getPosY()+self.ball.getDirY()+self.ball.getSize()) >= self.guiField.getFieldEndY()):
-                # invert the direction, from up to down
-                dirY_OrBallMissed = (self.ball.getDirY()*-1)
-            
-            #Check if player not missed the ball
-            if(dirY_OrBallMissed != self.DIR_BALL_MISSED):
-                # update ball dir
-                self.ball.updateDir(ballDirX, dirY_OrBallMissed)
+        elif (ballY > (playerMaxLow-(step*2))):
+            dirY = self.DIR_DOWN1
+        # else hit is between 2/5 and 3/5 
+        return dirY
+    
+    def updateBallDirX(self):       
+        playerHitball = False
+        playerMissedBall = False
+        ballDiry = self.ball.getDirY()
+        #Check ball hit player1 x-axis
+        if((self.ball.getPosX()+self.ball.getDirX()) == self.player1.getPosX() + self.player1.getWidth()):
+            if(self.playerHitBall(self.player1.getPosY(), self.ball.getPosY())):
+                playerHitball = True
+                ballDiry = self.playerHitBallDir(self.player1.getPosY(), self.ball.getPosY())
             else:
+                playerMissedBall = True
+        #Check ball hit player2 x-axis line
+        elif((self.ball.getPosX()+self.ball.getDirX()+self.ball.getSize()) == self.player2.getPosX()):
+            if(self.playerHitBall(self.player2.getPosY(), self.ball.getPosY())):
+                playerHitball = True                    
+                ballDiry = self.playerHitBallDir(self.player2.getPosY(), self.ball.getPosY())
+            else:
+                playerMissedBall = True
+        #Check if player hit the ball
+        if(playerHitball):
+            ballDirX = (self.ball.getDirX()*-1)
+            self.ball.updateDir(ballDirX, ballDiry)
+            self.ball.increaseSpeed(self.BALL_SPEED_INCREASE)            
+        return playerMissedBall
+            
+    def updateBallDirY(self):
+        #Check ball hits top
+        if((self.ball.getPosY()+self.ball.getDirY()) <= self.guiField.getFieldStartY()):
+            # invert the vertical direction, from up to down
+            self.ball.updateDir(self.ball.getDirX(), (self.ball.getDirY()*-1))
+        #Check ball hits bottom
+        elif((self.ball.getPosY()+self.ball.getDirY()+self.ball.getSize()) >= self.guiField.getFieldEndY()):
+            # invert the vertical ball direction, from down to up
+            self.ball.updateDir(self.ball.getDirX(), (self.ball.getDirY()*-1))
+  
+    def updateGame(self):
+        # Ball speed is the number of loops
+        for loopCnt in range(0, self.ball.getSpeed()):            
+            # Update ball y direction (if ball hits top or bottom) 
+            self.updateBallDirY()
+            
+            # Update ball x (and y) direction (if ball hits player or wall) 
+            playerMissedBall = self.updateBallDirX()
+            if (playerMissedBall):
                 #check who won via ballDirX left or right
-                if (ballDirX == self.DIR_RIGHT):
+                if (self.ball.getDirX() == self.DIR_LEFT):
                     self.GAME_STATE = self.STATE_PLAYER2_SCORED
                 else:
                     self.GAME_STATE = self.STATE_PLAYER1_SCORED
                 # end the loop
                 loopCnt = self.ball.getSpeed()
-             # update ball position
+            
+            # update ball position            
             self.ball.updatePos()
                     
     def handleConsoleinput(self):
@@ -204,7 +218,7 @@ class PongGame():
         self.guiField.removeObject(self.ball.getPosX(), self.ball.getPosY(), self.ball.getSize(), self.ball.getSize())
         
     def playerScored(self):
-        # Display new score CAN BE OPTIMIZED
+        # Display new score (can be optimized)
         self.guiField.drawFieldAndScore(self.player1.getPoints(), self.player2.getPoints())
         # Display current player and ball positions
         self.displayGame()                
