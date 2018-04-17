@@ -118,15 +118,17 @@ class PongGame():
             if(self.playerHitBall(self.player1.getPosY(), self.ball.getPosY())):
                 playerHitball = True
                 ballDiry = self.playerHitBallDir(self.player1.getPosY(), self.ball.getPosY())
-            else:
-                playerMissedBall = True
         #Check ball hit player2 x-axis line
         elif((self.ball.getPosX()+self.ball.getDirX()+self.ball.getSize()) == self.player2.getPosX()):
             if(self.playerHitBall(self.player2.getPosY(), self.ball.getPosY())):
                 playerHitball = True                    
                 ballDiry = self.playerHitBallDir(self.player2.getPosY(), self.ball.getPosY())
-            else:
-                playerMissedBall = True
+        #Check ball hit player1 wall
+        elif((self.ball.getPosX()+self.ball.getDirX()) <= self.guiField.getFieldStartX()):
+            playerMissedBall = True
+        #Check ball hit player2 wall
+        elif((self.ball.getPosX()+self.ball.getDirX()+self.ball.getSize()) >= self.guiField.getFieldEndX()):
+            playerMissedBall = True
         #Check if player hit the ball
         if(playerHitball):
             ballDirX = (self.ball.getDirX()*-1)
@@ -163,11 +165,6 @@ class PongGame():
             
             # update ball position            
             self.ball.updatePos()
-                    
-    def handleConsoleinput(self):
-        data = self.input.getConsole()
-        if (data == 1):
-            self.playGame = False
         
     def handleControllerInput(self):
         pixelsToMove = 20
@@ -242,35 +239,25 @@ class PongGame():
             # debug timer info
             #self.DEBUG_LOOP_START_TIME = pygame.time.get_ticks()
             
-            #self.handleConsoleinput()     Can only be implemented when console board is done
             self.handleInput()
             
             if (self.GAME_STATE == self.STATE_PLAY_NORMAL):
-                #self.handleControllerInput()  Can only be implemented when controllers are done                
-                
-                
-                self.DEBUG_LOOP_START_TIME = pygame.time.get_ticks()
-                               
+                #self.handleControllerInput()  Can only be implemented when controllers are done
                 self.displayGame()
-                
-                #print(str(self.DEBUG_LOOP_CNT) + " time " + str(pygame.time.get_ticks()-self.DEBUG_LOOP_START_TIME) + " tick: "+ str(pygame.time.get_ticks()))
-                
-                
                 self.updateGame()
             elif (self.GAME_STATE == self.STATE_PLAYER1_SCORED):
                 self.player1.addPoint()
                 self.playerScored()                
             elif (self.GAME_STATE == self.STATE_PLAYER2_SCORED):
                 self.player2.addPoint()
-                self.playerScored()                                       
+                self.playerScored()                                    
             
             # debug timer info
             #print(str(self.DEBUG_LOOP_CNT) + " time " + str(pygame.time.get_ticks()-self.DEBUG_LOOP_START_TIME) + " tick: "+ str(pygame.time.get_ticks()))
-            #if ((50 < (pygame.time.get_ticks()-self.DEBUG_LOOP_START_TIME)) and (self.DEBUG_LOOP_CNT > 10)):
-            #     pygame.time.delay(1000)
-            self.DEBUG_LOOP_CNT = self.DEBUG_LOOP_CNT+1
+            #self.DEBUG_LOOP_CNT = self.DEBUG_LOOP_CNT+1
             
             clock.tick(self.FPS_MAX)
+        # end of playPong
             
 
 
