@@ -46,11 +46,11 @@ class PongGame():
     DEBUG_LOOP_CNT = 0
     DEBUG_LOOP_START_TIME = 0
         
-    def __init__(self, ballSpeed, ballSize, playerWidth, playerHeight):        
+    def __init__(self, inInput, ballSpeed, ballSize, playerWidth, playerHeight):        
         pygame.init()        
         
         # create objects
-        self.input = InputHandler()
+        self.input = inInput
         self.guiField = GuiField()
         self.ball = Ball(ballSize, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-ballSize))
         player1PosX = self.guiField.getFieldStartX() + self.SPACE_WALL_PLAYER
@@ -239,9 +239,11 @@ class PongGame():
             # debug timer info
             #self.DEBUG_LOOP_START_TIME = pygame.time.get_ticks()
             
+            # handle keyboard input
             self.handleInput()
             
             if (self.GAME_STATE == self.STATE_PLAY_NORMAL):
+                # handle controller input
                 #self.handleControllerInput()  Can only be implemented when controllers are done
                 self.displayGame()
                 self.updateGame()

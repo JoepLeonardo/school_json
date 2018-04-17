@@ -42,12 +42,11 @@ class GuiSettings(DisplayOnMonitor):
     STATE_EXIT = 25
     STATE_MIN = STATE_BALL_SPEED
     STATE_MAX = STATE_EXIT
-    # Delay (ms)
-    DELAY_BETWEEN_INPUT = 300
 
-    def __init__(self):
+    def __init__(self, inInput):
         # create object(s)
-        self.input = InputHandler()
+        #self.input = InputHandler()
+        self.input = inInput
         # settings
         self.continueMenu = True
         self.ballSpeed = self.ITEM_BALL_SPEED_DEFAULT
@@ -105,13 +104,11 @@ class GuiSettings(DisplayOnMonitor):
         self.drawItemOverMenu(name, newValue, height)
         
         while (continueItem):            
-            # delay between button presses
-            pygame.time.delay(self.DELAY_BETWEEN_INPUT)
             # get input form console
             data = self.input.getConsole()
             # PRESSED NEXT
             if (data == self.input.DATA_NEXT):
-                # inccrease value if possible
+                # increase value if possible
                 if ((newValue+factor) <= (self.ITEM_VALUE_MAX*factor)):
                     newValue = newValue + factor
                     # draw the submenu
@@ -130,7 +127,6 @@ class GuiSettings(DisplayOnMonitor):
         # end of while
         self.drawMenuAndDisplay()
         return newValue
-            
         
     def handleMenu(self):
         # reset
@@ -189,5 +185,5 @@ class GuiSettings(DisplayOnMonitor):
                 else:
                     print("unknown settings state, exit")
                     self.continueMenu = False
-                
-            pygame.time.delay(self.DELAY_BETWEEN_INPUT)    
+        # end of while
+        

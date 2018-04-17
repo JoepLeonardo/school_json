@@ -1,13 +1,15 @@
 import pygame
 from pygame.locals import *
+from inputHandler import InputHandler
 from guiMenu import GuiMenu
 from guiSettings import GuiSettings
 from pongGame import PongGame
 from subprocess import call
 
 # Here so settings stay remembered
-settings = GuiSettings()
-menu = GuiMenu()
+input = InputHandler()
+settings = GuiSettings(input)
+menu = GuiMenu(input)
 
 playGame = True
 while playGame:
@@ -16,7 +18,7 @@ while playGame:
     # check if game needs to start
     if (action == menu.STATE_PLAY):
         # create game
-        game = PongGame(settings.getBallSpeed(), settings.getBallSize(), settings.getPlayerWidth(), settings.getPlayerHeight())
+        game = PongGame(input, settings.getBallSpeed(), settings.getBallSize(), settings.getPlayerWidth(), settings.getPlayerHeight())
         # play game
         game.playPong()
         # delete game
@@ -35,5 +37,6 @@ while playGame:
 pygame.quit()
 del menu
 del settings
+del input
 # shutdown rpi
 #call("sudo shutdown -h now", shell=True)+

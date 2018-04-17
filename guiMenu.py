@@ -23,14 +23,12 @@ class GuiMenu(DisplayOnMonitor):
     STATE_PLAY = 10
     STATE_SETTINGS = 11
     STATE_RETURN = 12
-    STATE_POWER_OFF = 13
-    # Delay (ms)
-    DELAY_BETWEEN_INPUT = 300
-    
+    STATE_POWER_OFF = 13    
           
-    def __init__(self):
+    def __init__(self, inInput):
         # create object(s)
-        self.input = InputHandler()        
+        #self.input = InputHandler()
+        self.input = inInput
         # settings
         self.continueShow = True
     
@@ -74,13 +72,7 @@ class GuiMenu(DisplayOnMonitor):
                     self.GAME_STATE = self.STATE_SETTINGS
                 self.drawMenu()
             elif (data == self.input.DATA_SELECT):
-                self.continueShow = False
-                
-            pygame.time.delay(self.DELAY_BETWEEN_INPUT)                    
+                self.continueShow = False                  
         # end of while, return menu choice
         return (self.GAME_STATE)
-                    
-                    
-
-
-
+    

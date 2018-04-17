@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import pygame
 from pygame.locals import *
+from functools import partial
 
 pygame.init()
 
@@ -25,6 +26,29 @@ class InputHandler():
     DATA_NEXT = 3
     DATA_PREV = 4
     
+    def callBackButtonPressed(self, channel):
+        if (GPIO.input(self.PIN_POWER_OFF)):
+            self.powerOffPressed = True
+        elif (GPIO.input(self.PIN_SELECT)):
+            self.selectPressed = True
+        elif (GPIO.input(self.PIN_NEXT)):
+            self.nextPressed = True
+        elif (GPIO.input(self.PIN_PREV)):
+            self.prevPressed = True
+    
+    def setInterrupts(self):
+        # Set interrupts on rising edge
+        GPIO.add_event_detect(self.PIN_POWER_OFF, GPIO.RISING, callback=lambda *a: self.callBackButtonPressed(self.PIN_POWER_OFF))
+        GPIO.add_event_detect(self.PIN_SELECT, GPIO.RISING, callback=lambda *a: self.callBackButtonPressed(self.PIN_SELECT))
+        GPIO.add_event_detect(self.PIN_NEXT, GPIO.RISING, callback=lambda *a: self.callBackButtonPressed(self.PIN_NEXT))
+        GPIO.add_event_detect(self.PIN_PREV, GPIO.RISING, callback=lambda *a: self.callBackButtonPressed(self.PIN_PREV))        
+        
+    def removeInterrupts(self):
+        GPIO.remove_event_detect(self.PIN_POWER_OFF)
+        GPIO.remove_event_detect(self.PIN_SELECT)
+        GPIO.remove_event_detect(self.PIN_NEXT)
+        GPIO.remove_event_detect(self.PIN_PREV)
+    
     def __init__(self):
         # Use pinout from BCM
         GPIO.setmode(GPIO.BCM)
@@ -39,20 +63,32 @@ class InputHandler():
         GPIO.setup(self.PIN_J1_0, GPIO.IN)
         GPIO.setup(self.PIN_J1_1, GPIO.IN)
         GPIO.setup(self.PIN_J1_2, GPIO.IN)
-    
+        # create variables
+        self.powerOffPressed = False
+        self.selectPressed = False
+        self.nextPressed = False
+        self.prevPressed = False
+        # Set interrupts
+        self.removeInterrupts()
+        self.setInterrupts()
+        
     #def __del__(self):
-        #print("exit inputHandler")
+        print("exit inputHandler")
     
     def getConsole(self):
-        # Returns the pin that's pressed
+        # Returns the pin thats pressed
         data = self.DATA_NONE 
-        if (GPIO.input(self.PIN_POWER_OFF)):
-            data = self.DATA_POWER_OFF
-        elif (GPIO.input(self.PIN_SELECT)):
+        if (self.powerOffPressed):
+            self.powerOffPressed = False
+            data = self.DATA_POWER_OFF            
+        elif (self.selectPressed):
+            self.selectPressed = False
             data = self.DATA_SELECT
-        elif (GPIO.input(self.PIN_NEXT)):
+        elif (self.nextPressed):
+            self.nextPressed = False
             data = self.DATA_NEXT
-        elif (GPIO.input(self.PIN_PREV)):
+        elif (self.prevPressed):
+            self.prevPressed = False
             data = self.DATA_PREV
         return data
                 
