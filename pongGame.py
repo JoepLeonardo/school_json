@@ -40,7 +40,12 @@ class PongGame():
     DIR_LEFT = -1
     DIR_RIGHT = (DIR_LEFT*-1) 
     DIR_NORMAL = 0
-    DIR_MAX = 2.0    
+    DIR_MAX = 2.0
+    
+    # Sound files
+    SOUND_SCORED = "pong_8bit_scored.wav"
+    SOUND_HIT_WALL = "pong_8bit_hit_wall.wav"
+    SOUND_HIT_PLAYER = "pong_8bit_hit_player.wav"
     
     # debug variables
     DEBUG_LOOP_CNT = 0
@@ -99,7 +104,10 @@ class PongGame():
         # Display the current game state
         self.displayGame()
         # Wait before the game starts
-        pygame.time.delay(self.DELAY_BEFORE_START)
+        pygame.time.wait(self.DELAY_BEFORE_START)
+    
+    def playSound(self, path):
+        pygame.mixer.Sound(path).play(0)
 
     def playerHitBall(self, playerY, ballY):
         # Attention: function only checks hit on y-axis 
@@ -143,19 +151,24 @@ class PongGame():
             playerMissedBall = True
         #Check if player hit the ball
         if(playerHitball):
+            self.playSound(self.SOUND_HIT_PLAYER)
             ballDirX = (self.ball.getDirX()*-1)
             self.ball.updateDir(ballDirX, ballDiry)
             self.ball.increaseSpeed(self.BALL_SPEED_INCREASE)            
         return playerMissedBall
             
     def updateBallDirY(self):
+        ballHitWall = False
         #Check ball hits top
         if(int((self.ball.getPosY()+self.ball.getDirY())) <= self.guiField.getFieldStartY()):
-            # invert the vertical direction, from up to down
-            self.ball.updateDir(self.ball.getDirX(), (self.ball.getDirY()*-1))
+            ballHitWall = True
         #Check ball hits bottom
         elif(int((self.ball.getPosY()+self.ball.getDirY()+self.ball.getSize())) >= self.guiField.getFieldEndY()):
-            # invert the vertical ball direction, from down to up
+            ballHitWall = True
+        if(ballHitWall):
+            # play sound
+            self.playSound(self.SOUND_HIT_WALL)
+            # invert the vertical ball direction
             self.ball.updateDir(self.ball.getDirX(), (self.ball.getDirY()*-1))
   
     def updateGame(self):
@@ -186,7 +199,7 @@ class PongGame():
         self.player2.move((data*self.CONTROLLER_SENSITIVITY));
         
     def handleInput(self):
-        pixelsToMove = 20
+        pixelsToMove = 40
         for event in pygame.event.get():
             # Check if 'esc' or close button is pressed
             if (event.type == QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE)):
@@ -221,6 +234,9 @@ class PongGame():
         self.guiField.removeObject(self.ball.getPosX(), int(self.ball.getPosY()), self.ball.getSize(), self.ball.getSize())
         
     def playerScored(self):
+        self.playSound(self.SOUND_SCORED)
+        while pygame.mixer.get_busy():
+            pygame.time.wait(200)
         # Display new score (can be optimized)
         self.guiField.drawFieldAndScore(self.player1.getPoints(), self.player2.getPoints())
         # Display current player and ball positions
@@ -228,12 +244,12 @@ class PongGame():
         # Check if a player has max points
         if ((self.player1.getPoints() == self.POINTS_MAX) or (self.player2.getPoints() == self.POINTS_MAX)):
              # Wait to show player won
-            pygame.time.delay(self.DELAY_PLAYER_WON)
+            pygame.time.wait(self.DELAY_PLAYER_WON)
             # End pong game
             self.PLAY_PONG = False
         else:
             # Wait to show player scored
-            pygame.time.delay(self.DELAY_PLAYER_SCORED)
+            pygame.time.wait(self.DELAY_PLAYER_SCORED)
             # Reset all positons
             self.resetGame()
 

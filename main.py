@@ -1,5 +1,10 @@
 import pygame
 from pygame.locals import *
+# pygame init
+pygame.mixer.pre_init(22050, -16, 1, 64)
+pygame.mixer.init()
+pygame.init()
+
 from inputHandler import InputHandler
 from guiMenu import GuiMenu
 from guiSettings import GuiSettings
