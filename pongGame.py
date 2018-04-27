@@ -235,8 +235,6 @@ class PongGame():
         
     def playerScored(self):
         self.playSound(self.SOUND_SCORED)
-        while pygame.mixer.get_busy():
-            pygame.time.wait(200)
         # Display new score (can be optimized)
         self.guiField.drawFieldAndScore(self.player1.getPoints(), self.player2.getPoints())
         # Display current player and ball positions
