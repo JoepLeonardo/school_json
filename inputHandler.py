@@ -69,6 +69,12 @@ class InputHandler():
     #def __del__(self):
         #print("exit inputHandler")
     
+    def reset(self):
+        # reset variables
+        self.selectPressed = False
+        self.nextPressed = False
+        self.prevPressed = False
+    
     def getConsole(self):
         # Returns the pin thats pressed
         data = self.DATA_NONE            
@@ -82,39 +88,34 @@ class InputHandler():
             self.prevPressed = False
             data = self.DATA_PREV
         return data
-                    
-    def getController1(self):
+    
+    def getControllerData(self, pin1, pin2, pin3):
         # data minus joystick idle value
         data = (self.JOYSTICK_IDLE*-1)
         # add controller values to data
-        if(GPIO.input(self.PIN_J0_0)):
+        if(GPIO.input(pin1)):
             data += 1
-        if (GPIO.input(self.PIN_J0_1)):
+        if (GPIO.input(pin2)):
             data += 2
-        if (GPIO.input(self.PIN_J0_2)):
+        if (GPIO.input(pin3)):
             data += 4
         # controller recognizes 3 steps up and 4 down, last step down must be removed
         if (data == -4):
             data = -3
         #return data
+        return data
+                    
+    def getController1(self):
+        data = self.getControllerData(self.PIN_J0_0, self.PIN_J0_1, self.PIN_J0_2)
         # DEBUG RETURN because only 1 controller is ready yet
         # DEBUG RETURN because console board has a fault
+        #return data
         return 0
                 
     def getController2(self):
-        # data minus joystick idle value
-        data = (self.JOYSTICK_IDLE*-1)
-        # add controller values to data
-        if(GPIO.input(self.PIN_J1_0)):
-            data += 1
-        if (GPIO.input(self.PIN_J1_1)):
-            data += 2
-        if (GPIO.input(self.PIN_J1_2)):
-            data += 4
-        # controller recognizes 3 steps up and 4 down, last step down must be removed
-        if (data == -4):
-            data = -3
+        data = self.getControllerData(self.PIN_J1_0, self.PIN_J1_1, self.PIN_J1_2)
         # DEBUG RETURN because so controller doesn't need to be connected
+        #return data
         return 0
             
             

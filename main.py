@@ -28,6 +28,8 @@ while playGame:
         game.playPong()
         # delete game
         del game
+        # reset the flags from buttons pressed
+        input.reset()
     # check if settings needs to be openend
     elif (action == menu.STATE_SETTINGS):
         settings.handleMenu()
