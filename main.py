@@ -15,6 +15,9 @@ from subprocess import call
 input = InputHandler()
 settings = GuiSettings(input)
 menu = GuiMenu(input)
+        
+# Bug fix, the first sound the game plays doesn't make sound.
+pygame.mixer.Sound('pong_8bit_scored.wav').play(0)
 
 playGame = True
 while playGame:

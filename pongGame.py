@@ -88,7 +88,7 @@ class PongGame():
         dir = self.DIR_MAX/4        
         dir = float(random.uniform((dir*-1), dir))
         return dir
-        
+            
     def resetGame(self):
         # Reset the ball
         ballPosY = self.fieldHeigtMiddle-(int(self.ball.getSize()/2))
@@ -105,6 +105,7 @@ class PongGame():
         self.displayGame()
         # Wait before the game starts
         pygame.time.wait(self.DELAY_BEFORE_START)
+        # Debug code try    
     
     def playSound(self, path):
         pygame.mixer.Sound(path).play(0)
