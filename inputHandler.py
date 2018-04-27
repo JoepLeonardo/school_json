@@ -8,7 +8,6 @@ pygame.init()
 class InputHandler():
     
     # GPIO pins
-    PIN_POWER_OFF = 5
     PIN_SELECT = 19
     PIN_NEXT = 13
     PIN_PREV = 26
@@ -28,9 +27,7 @@ class InputHandler():
     JOYSTICK_IDLE = 4
     
     def callBackButtonPressed(self, channel):
-        if (GPIO.input(self.PIN_POWER_OFF)):
-            self.powerOffPressed = True
-        elif (GPIO.input(self.PIN_SELECT)):
+        if (GPIO.input(self.PIN_SELECT)):
             self.selectPressed = True
         elif (GPIO.input(self.PIN_NEXT)):
             self.nextPressed = True
@@ -39,13 +36,11 @@ class InputHandler():
     
     def setInterrupts(self):
         # Set interrupts on rising edge
-        GPIO.add_event_detect(self.PIN_POWER_OFF, GPIO.RISING, callback=lambda *a: self.callBackButtonPressed(self.PIN_POWER_OFF))
         GPIO.add_event_detect(self.PIN_SELECT, GPIO.RISING, callback=lambda *a: self.callBackButtonPressed(self.PIN_SELECT))
         GPIO.add_event_detect(self.PIN_NEXT, GPIO.RISING, callback=lambda *a: self.callBackButtonPressed(self.PIN_NEXT))
         GPIO.add_event_detect(self.PIN_PREV, GPIO.RISING, callback=lambda *a: self.callBackButtonPressed(self.PIN_PREV))        
         
     def removeInterrupts(self):
-        GPIO.remove_event_detect(self.PIN_POWER_OFF)
         GPIO.remove_event_detect(self.PIN_SELECT)
         GPIO.remove_event_detect(self.PIN_NEXT)
         GPIO.remove_event_detect(self.PIN_PREV)
@@ -54,7 +49,6 @@ class InputHandler():
         # Use pinout from BCM
         GPIO.setmode(GPIO.BCM)
         # Set all pins as input
-        GPIO.setup(self.PIN_POWER_OFF, GPIO.IN)
         GPIO.setup(self.PIN_SELECT, GPIO.IN)
         GPIO.setup(self.PIN_PREV, GPIO.IN)
         GPIO.setup(self.PIN_NEXT, GPIO.IN)
@@ -65,7 +59,6 @@ class InputHandler():
         GPIO.setup(self.PIN_J1_1, GPIO.IN)
         GPIO.setup(self.PIN_J1_2, GPIO.IN)
         # create variables
-        self.powerOffPressed = False
         self.selectPressed = False
         self.nextPressed = False
         self.prevPressed = False
@@ -78,11 +71,8 @@ class InputHandler():
     
     def getConsole(self):
         # Returns the pin thats pressed
-        data = self.DATA_NONE 
-        if (self.powerOffPressed):
-            self.powerOffPressed = False
-            data = self.DATA_POWER_OFF            
-        elif (self.selectPressed):
+        data = self.DATA_NONE            
+        if (self.selectPressed):
             self.selectPressed = False
             data = self.DATA_SELECT
         elif (self.nextPressed):
@@ -92,7 +82,7 @@ class InputHandler():
             self.prevPressed = False
             data = self.DATA_PREV
         return data
-                
+                    
     def getController1(self):
         # data minus joystick idle value
         data = (self.JOYSTICK_IDLE*-1)
@@ -107,7 +97,7 @@ class InputHandler():
         if (data == -4):
             data = -3
         #return data
-        # DEBUG RETURN because only 1 controller is ready yet and
+        # DEBUG RETURN because only 1 controller is ready yet
         # DEBUG RETURN because console board has a fault
         return 0
                 

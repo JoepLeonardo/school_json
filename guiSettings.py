@@ -137,11 +137,8 @@ class GuiSettings(DisplayOnMonitor):
             # get input form console
             data = self.input.getConsole()
             
-            # PRESSED POWER OFF
-            if (data == self.input.DATA_POWER_OFF):
-                self.continueMenu = False
             # PRESSED NEXT
-            elif (data == self.input.DATA_NEXT):
+            if (data == self.input.DATA_NEXT):
                 if (self.GAME_STATE < self.STATE_MAX):
                     self.GAME_STATE = self.GAME_STATE + 1
                 else:

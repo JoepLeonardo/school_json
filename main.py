@@ -11,7 +11,7 @@ from guiSettings import GuiSettings
 from pongGame import PongGame
 from subprocess import call
 
-# Here so settings stay remembered
+# Create objects here so settings stay remembered
 input = InputHandler()
 settings = GuiSettings(input)
 menu = GuiMenu(input)
