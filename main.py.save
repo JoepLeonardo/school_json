@@ -1,4 +1,4 @@
-import pygame
+Fimport pygame
 from pygame.locals import *
 # pygame init
 pygame.mixer.pre_init(22050, -16, 1, 64)
@@ -20,7 +20,7 @@ menu = GuiMenu(input)
 pygame.mixer.Sound('/home/pi/Desktop/pong2d/pong_8bit_scored.wav').play(0)
 
 playGame = True
-shutDown = False
+shutDown = True
 while playGame:
     # get action from menu
     action = menu.handleMenu()
@@ -40,14 +40,14 @@ while playGame:
     # check if console must shut down
     elif (action == menu.STATE_POWER_OFF):
         playGame = False
-        shutDown = True
+        #shutDown = True
     # check if console must exit the game
     elif (action == menu.STATE_DEBUG_EXIT):
         playGame = False
     else:
         print("unknown menu state, exit")
         playGame = False
-
+        
 # end of game so exit program
 pygame.quit()
 del menu

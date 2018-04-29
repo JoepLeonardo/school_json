@@ -43,9 +43,9 @@ class PongGame():
     DIR_MAX = 2.0
     
     # Sound files
-    SOUND_SCORED = "pong_8bit_scored.wav"
-    SOUND_HIT_WALL = "pong_8bit_hit_wall.wav"
-    SOUND_HIT_PLAYER = "pong_8bit_hit_player.wav"
+    SOUND_SCORED = "/home/pi/Desktop/pong2d/pong_8bit_scored.wav"
+    SOUND_HIT_WALL = "/home/pi/Desktop/pong2d/pong_8bit_hit_wall.wav"
+    SOUND_HIT_PLAYER = "/home/pi/Desktop/pong2d/pong_8bit_hit_player.wav"
     
     # debug variables
     DEBUG_LOOP_CNT = 0
@@ -199,7 +199,7 @@ class PongGame():
         data = self.input.getController2()
         self.player2.move((data*self.CONTROLLER_SENSITIVITY));
         
-    def handleInput(self):
+    def handleKeyboardInput(self):
         pixelsToMove = 40
         for event in pygame.event.get():
             # Check if 'esc' or close button is pressed
@@ -261,7 +261,7 @@ class PongGame():
             #self.DEBUG_LOOP_START_TIME = pygame.time.get_ticks()
             
             # handle keyboard input
-            self.handleInput()
+            self.handleKeyboardInput()
             
             if (self.GAME_STATE == self.STATE_PLAY_NORMAL):
                 self.handleControllerInput()

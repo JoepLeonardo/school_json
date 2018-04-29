@@ -26,7 +26,9 @@ class GuiMenu(DisplayOnMonitor):
     STATE_SETTINGS = 11
     STATE_POWER_OFF = 12
     STATE_MIN = STATE_PLAY
-    STATE_MAX = STATE_POWER_OFF
+    STATE_MAX = STATE_POWER_OFF    
+    # Debug code to exit the game via keyboard
+    STATE_DEBUG_EXIT = 13
           
     def __init__(self, inInput):
         # create object(s)
@@ -63,6 +65,13 @@ class GuiMenu(DisplayOnMonitor):
             self.drawTextMiddle(self.ITEM_POWER_OFF_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM3, True)
         # show the drawings
         self.display()
+        
+    def handleKeyboardInput(self):
+        for event in pygame.event.get():
+            # Check if 'esc' or close button is pressed
+            if (event.type == QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE)):
+                self.continueShow = False
+                self.GAME_STATE = self.STATE_DEBUG_EXIT                
                    
     def handleMenu(self):
         self.reset()
@@ -88,7 +97,9 @@ class GuiMenu(DisplayOnMonitor):
                 self.drawMenu()    
             # PRESSED SELECT
             elif (data == self.input.DATA_SELECT):
-                self.continueShow = False                  
+                self.continueShow = False
+            # Check keyboard
+            self.handleKeyboardInput()
         # end of while, return menu choice
         return (self.GAME_STATE)
     

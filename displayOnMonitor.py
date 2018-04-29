@@ -1,3 +1,4 @@
+import sys
 import pygame
 from pygame.locals import *
 
@@ -22,7 +23,7 @@ class DisplayOnMonitor:
     
     def __init__(self):        
         # create monitor screen where surface is going to be displayed on 
-        self.monitorScreen = pygame.display.set_mode((self.MONITOR_WIDTH, self.MONITOR_HEIGHT),HWSURFACE|DOUBLEBUF|FULLSCREEN)
+        self.monitorScreen = pygame.display.set_mode((self.MONITOR_WIDTH, self.MONITOR_HEIGHT),HWSURFACE|DOUBLEBUF|FULLSCREEN|NOFRAME)
         # create surface screen where all items are going to be displayed on
         self.surfaceScreen = pygame.Surface((self.SURFACE_WIDTH, self.SURFACE_HEIGHT))
         
