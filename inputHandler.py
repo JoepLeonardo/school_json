@@ -114,9 +114,7 @@ class InputHandler():
                 
     def getController2(self):
         data = self.getControllerData(self.PIN_J1_0, self.PIN_J1_1, self.PIN_J1_2)
-        # DEBUG RETURN because so controller doesn't need to be connected
-        #return data
-        return 0
+        return data
             
             
     
