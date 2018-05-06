@@ -4,7 +4,7 @@ from pygame.locals import *
 
 pygame.init()
 
-class GuiField(DisplayOnMonitor):
+class GuiPong(DisplayOnMonitor):
     
     # size of gui of the game
     GUI_WIDTH = DisplayOnMonitor.MONITOR_WIDTH

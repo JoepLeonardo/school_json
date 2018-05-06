@@ -1,5 +1,5 @@
 from inputHandler import InputHandler
-from guiField import GuiField
+from guiPong import GuiPong
 from player import Player
 from ball import Ball
 import pygame
@@ -16,7 +16,7 @@ class PongGame():
     
     # play pong loop
     PLAY_PONG = True
-    # Maximum points a player can score (guiField display's until 3)
+    # Maximum points a player can score (guiPong display's until 3)
     POINTS_MAX = 3
     # maxiumum framerate if programm runs fast enough
     FPS_MAX = 60
@@ -57,17 +57,17 @@ class PongGame():
         
         # create objects
         self.input = inInput
-        self.guiField = GuiField()
-        self.ball = Ball(ballSize, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-ballSize))
-        player1PosX = self.guiField.getFieldStartX() + self.SPACE_WALL_PLAYER
-        player2PosX = self.guiField.getFieldEndX() -self.SPACE_WALL_PLAYER - playerWidth
-        self.player1 = Player(player1PosX, playerWidth, playerHeight, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-playerHeight))
-        self.player2 = Player(player2PosX, playerWidth, playerHeight, self.guiField.getFieldStartY(), (self.guiField.getFieldEndY()-playerHeight))
+        self.guiPong = GuiPong()
+        self.ball = Ball(ballSize, self.guiPong.getFieldStartY(), (self.guiPong.getFieldEndY()-ballSize))
+        player1PosX = self.guiPong.getFieldStartX() + self.SPACE_WALL_PLAYER
+        player2PosX = self.guiPong.getFieldEndX() -self.SPACE_WALL_PLAYER - playerWidth
+        self.player1 = Player(player1PosX, playerWidth, playerHeight, self.guiPong.getFieldStartY(), (self.guiPong.getFieldEndY()-playerHeight))
+        self.player2 = Player(player2PosX, playerWidth, playerHeight, self.guiPong.getFieldStartY(), (self.guiPong.getFieldEndY()-playerHeight))
                 
         # create variables
         self.ballStartSpeed = ballSpeed
-        self.fieldHeigtMiddle = (((int)(self.guiField.getFieldHeight()/2)))
-        self.fieldWidthMiddle = (((int)(self.guiField.getFieldWidth()/2)))
+        self.fieldHeigtMiddle = (((int)(self.guiPong.getFieldHeight()/2)))
+        self.fieldWidthMiddle = (((int)(self.guiPong.getFieldWidth()/2)))
     
     def ballDirRandomHorizontal(self):
         dir = self.DIR_NORMAL
@@ -98,7 +98,7 @@ class PongGame():
         self.player1.reset(playerPosY)
         self.player2.reset(playerPosY)
         # Draw the field and score
-        self.guiField.drawFieldAndScore(self.player1.getPoints(), self.player2.getPoints())
+        self.guiPong.drawFieldAndScore(self.player1.getPoints(), self.player2.getPoints())
         # Game state to noraml
         self.GAME_STATE = self.STATE_PLAY_NORMAL
         # Display the current game state
@@ -145,10 +145,10 @@ class PongGame():
                 playerHitball = True                    
                 ballDiry = self.playerHitBallDir(self.player2.getPosY(), int(self.ball.getPosY()))
         #Check ball hit player1 wall
-        elif((self.ball.getPosX()+self.ball.getDirX()) <= self.guiField.getFieldStartX()):
+        elif((self.ball.getPosX()+self.ball.getDirX()) <= self.guiPong.getFieldStartX()):
             playerMissedBall = True
         #Check ball hit player2 wall
-        elif((self.ball.getPosX()+self.ball.getDirX()+self.ball.getSize()) >= self.guiField.getFieldEndX()):
+        elif((self.ball.getPosX()+self.ball.getDirX()+self.ball.getSize()) >= self.guiPong.getFieldEndX()):
             playerMissedBall = True
         #Check if player hit the ball
         if(playerHitball):
@@ -161,10 +161,10 @@ class PongGame():
     def updateBallDirY(self):
         ballHitWall = False
         #Check ball hits top
-        if(int((self.ball.getPosY()+self.ball.getDirY())) <= self.guiField.getFieldStartY()):
+        if(int((self.ball.getPosY()+self.ball.getDirY())) <= self.guiPong.getFieldStartY()):
             ballHitWall = True
         #Check ball hits bottom
-        elif(int((self.ball.getPosY()+self.ball.getDirY()+self.ball.getSize())) >= self.guiField.getFieldEndY()):
+        elif(int((self.ball.getPosY()+self.ball.getDirY()+self.ball.getSize())) >= self.guiPong.getFieldEndY()):
             ballHitWall = True
         if(ballHitWall):
             # play sound
@@ -224,20 +224,20 @@ class PongGame():
 
     def displayGame(self):
         # draw players and ball
-        self.guiField.drawObject(self.player1.getPosX(), self.player1.getPosY(), self.player1.getWidth(), self.player1.getHeight())
-        self.guiField.drawObject(self.player2.getPosX(), self.player2.getPosY(), self.player2.getWidth(), self.player2.getHeight())
-        self.guiField.drawObject(self.ball.getPosX(), int(self.ball.getPosY()), self.ball.getSize(), self.ball.getSize())
+        self.guiPong.drawObject(self.player1.getPosX(), self.player1.getPosY(), self.player1.getWidth(), self.player1.getHeight())
+        self.guiPong.drawObject(self.player2.getPosX(), self.player2.getPosY(), self.player2.getWidth(), self.player2.getHeight())
+        self.guiPong.drawObject(self.ball.getPosX(), int(self.ball.getPosY()), self.ball.getSize(), self.ball.getSize())
         # display drawing
-        self.guiField.displayFast()
+        self.guiPong.displayFast()
         # clear field
-        self.guiField.removeObject(self.player1.getPosX(), self.player1.getPosY(), self.player1.getWidth(), self.player1.getHeight())
-        self.guiField.removeObject(self.player2.getPosX(), self.player2.getPosY(), self.player2.getWidth(), self.player2.getHeight())
-        self.guiField.removeObject(self.ball.getPosX(), int(self.ball.getPosY()), self.ball.getSize(), self.ball.getSize())
+        self.guiPong.removeObject(self.player1.getPosX(), self.player1.getPosY(), self.player1.getWidth(), self.player1.getHeight())
+        self.guiPong.removeObject(self.player2.getPosX(), self.player2.getPosY(), self.player2.getWidth(), self.player2.getHeight())
+        self.guiPong.removeObject(self.ball.getPosX(), int(self.ball.getPosY()), self.ball.getSize(), self.ball.getSize())
         
     def playerScored(self):
         self.playSound(self.SOUND_SCORED)
         # Display new score (can be optimized)
-        self.guiField.drawFieldAndScore(self.player1.getPoints(), self.player2.getPoints())
+        self.guiPong.drawFieldAndScore(self.player1.getPoints(), self.player2.getPoints())
         # Display current player and ball positions
         self.displayGame()                
         # Check if a player has max points
