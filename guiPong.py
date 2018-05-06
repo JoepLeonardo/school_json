@@ -29,23 +29,24 @@ class GuiPong(DisplayOnMonitor):
     def __init__(self):
         DisplayOnMonitor.__init__(self)
         self.halfLineX = ((int(self.GUI_WIDTH/2)) - (int(self.BORDER_WIDTH/2)))
+        print ('g4 Width: %i px, Heigth: %i px' % (self.MONITOR_WIDTH, self.MONITOR_HEIGHT))
             
     def drawHalfLine(self):
         # draw board half line
         halfLineY = self.GUI_TOP
-        while halfLineY < self.SURFACE_HEIGHT:
+        while halfLineY < self.GUI_HEIGHT:
             self.drawRectFast(self.halfLineX, halfLineY, self.BORDER_WIDTH, self.BORDER_HEIGHT)
             halfLineY += (self.BORDER_HEIGHT*2)
            
     def drawFieldAndScore(self, scoreP1, scoreP2):
-        # make the surface black
+        # make the screen black
         self.emptyScreenFast()
         
         # draw border gamefield (line above, right, left, under)
         self.drawRectFast(0, self.GUI_TOP, self.GUI_WIDTH, self.BORDER_WIDTH)
-        self.drawRectFast(0, self.GUI_TOP, self.BORDER_WIDTH, (self.SURFACE_HEIGHT-self.GUI_TOP))
-        self.drawRectFast((self.GUI_WIDTH-self.BORDER_WIDTH), self.GUI_TOP, self.BORDER_WIDTH, (self.SURFACE_HEIGHT-self.GUI_TOP))
-        self.drawRectFast(0, (self.SURFACE_HEIGHT-self.BORDER_WIDTH), self.GUI_WIDTH, self.BORDER_WIDTH)
+        self.drawRectFast(0, self.GUI_TOP, self.BORDER_WIDTH, (self.GUI_HEIGHT-self.GUI_TOP))
+        self.drawRectFast((self.GUI_WIDTH-self.BORDER_WIDTH), self.GUI_TOP, self.BORDER_WIDTH, (self.GUI_HEIGHT-self.GUI_TOP))
+        self.drawRectFast(0, (self.GUI_HEIGHT-self.BORDER_WIDTH), self.GUI_WIDTH, self.BORDER_WIDTH)
                          
         # draw board half line
         self.drawHalfLine()
@@ -120,7 +121,7 @@ class GuiPong(DisplayOnMonitor):
 
     def getFieldHeight(self):
         # Height of the black part of the field
-        fieldHeight = self.SURFACE_HEIGHT -self.GUI_TOP -(self.BORDER_WIDTH*2)
+        fieldHeight = self.GUI_HEIGHT -self.GUI_TOP -(self.BORDER_WIDTH*2)
         return fieldHeight
     
     def getFieldStartY(self):
@@ -130,7 +131,7 @@ class GuiPong(DisplayOnMonitor):
     
     def getFieldEndY(self):
         # field y-axis end
-        fieldEndY = self.SURFACE_HEIGHT - self.BORDER_WIDTH
+        fieldEndY = self.GUI_HEIGHT - self.BORDER_WIDTH
         return fieldEndY
     
     def getFieldStartX(self):
