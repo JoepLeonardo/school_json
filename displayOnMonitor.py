@@ -19,9 +19,11 @@ class DisplayOnMonitor:
     MONITOR_WIDTH = pygame.display.Info().current_w
     MONITOR_HEIGHT = pygame.display.Info().current_h
     
-    # surface resolution CTOUCH (1824x984)
-    SURFACE_WIDTH = 1824
-    SURFACE_HEIGHT = 984
+    # surface resolution CTOUCH (1184x624) (old: 1824x984)
+    SURFACE_WIDTH = 1184
+    SURFACE_HEIGHT = 624
+    #SURFACE_WIDTH = 1824
+    #SURFACE_HEIGHT = 984
         
     # colors
     COLOR_WHITE = (255, 255, 255)
@@ -31,7 +33,7 @@ class DisplayOnMonitor:
     FONT = 'Arial'
     TEXT_IN_THE_MIDDLE = 9999
     
-    def __init__(self):        
+    def __init__(self):
         # create monitor screen where surface is going to be displayed on 
         self.monitorScreen = pygame.display.set_mode((self.MONITOR_WIDTH, self.MONITOR_HEIGHT),HWSURFACE|DOUBLEBUF|FULLSCREEN|NOFRAME)
         # create surface screen where all items are going to be displayed on

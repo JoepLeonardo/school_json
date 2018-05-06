@@ -20,8 +20,8 @@ pygame.init()
 class GuiSettings(DisplayOnMonitor):
     
     # display settings
-    HEIGHT_ITEM = (DisplayOnMonitor.SURFACE_HEIGHT*1/7)
-    ITEM_SIZE = 70
+    HEIGHT_ITEM = (DisplayOnMonitor.SURFACE_HEIGHT*1/8)
+    ITEM_SIZE = 50
     ITEM_VALUE_MIN = 1
     ITEM_VALUE_MAX = 99    
     ITEM_DEFAULT_FACTOR = 1

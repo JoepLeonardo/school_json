@@ -21,17 +21,17 @@ pygame.init()
 class GuiMenu(DisplayOnMonitor):
     
     # display height
-    HEIGHT_HEAD = (DisplayOnMonitor.SURFACE_HEIGHT*2/7)
-    HEIGHT_ITEM1 = (DisplayOnMonitor.SURFACE_HEIGHT*4/7)
-    HEIGHT_ITEM2 = (DisplayOnMonitor.SURFACE_HEIGHT*5/7)
-    HEIGHT_ITEM3 = (DisplayOnMonitor.SURFACE_HEIGHT*6/7)
+    HEIGHT_HEAD = (DisplayOnMonitor.SURFACE_HEIGHT*2/8)
+    HEIGHT_ITEM1 = (DisplayOnMonitor.SURFACE_HEIGHT*5/8)
+    HEIGHT_ITEM2 = (DisplayOnMonitor.SURFACE_HEIGHT*6/8)
+    HEIGHT_ITEM3 = (DisplayOnMonitor.SURFACE_HEIGHT*7/8)
     # settings for the game from menu (can't add more niveaus here)
     HEAD_NAME = 'Pong 2D'
-    HEAD_SIZE = 200
+    HEAD_SIZE = 150
     ITEM_PLAY_NAME = 'Play'
     ITEM_SETTINGS_NAME = 'Settings'
     ITEM_POWER_OFF_NAME = 'Turn Off'
-    ITEM_SIZE = 70
+    ITEM_SIZE = 50
     # Menu state
     GAME_STATE = None
     STATE_PLAY = 10
