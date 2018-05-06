@@ -1,3 +1,14 @@
+#####################################################
+#
+#        guiPong.py functionality:
+#
+# * inheritance from displayOnMonitor.py
+# * contains the size of the pong field
+# * draws the field, score and bats
+# * draws everything fast
+#
+#####################################################
+
 from displayOnMonitor import DisplayOnMonitor
 import pygame
 from pygame.locals import *

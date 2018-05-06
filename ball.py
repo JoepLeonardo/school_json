@@ -1,3 +1,13 @@
+#####################################################
+#
+#        ball.py functionality:
+#
+# * keeps all ball information
+# * receives new ball direction
+# * updates ball position based on the current direction
+#
+#####################################################
+
 class Ball():
        
     def __init__(self, inSize, inMinY, inMaxY):

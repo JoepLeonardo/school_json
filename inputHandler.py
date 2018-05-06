@@ -1,3 +1,13 @@
+#####################################################
+#
+#        inputHandler.py functionality:
+#
+# * has all GPIO information
+# * returns the pressed buttons on request
+# * returns the controllerdata on request
+#
+#####################################################
+
 import RPi.GPIO as GPIO
 import pygame
 from pygame.locals import *

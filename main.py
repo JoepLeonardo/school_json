@@ -1,3 +1,13 @@
+#####################################################
+#
+#        main.py functionality:
+#
+# * file that starts the game
+# * connects all the components (guiMenu.py, guiSettings.py, pongGame.py)
+# * bug fix: plays on startup one sound here
+#
+#####################################################
+
 import pygame
 from pygame.locals import *
 # pygame init

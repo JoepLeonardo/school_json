@@ -1,3 +1,14 @@
+#####################################################
+#
+#        guiSettings.py functionality:
+#
+# * inheritance from displayOnMonitor.py
+# * contains the settings shown in the settings menu
+# * handles the settings menu via inputHandler.py
+# * draws everything scaled
+#
+#####################################################
+
 from displayOnMonitor import DisplayOnMonitor
 from inputHandler import InputHandler
 import pygame

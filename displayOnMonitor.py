@@ -1,3 +1,13 @@
+#####################################################
+#
+#        displayOnMonitor.py functionality:
+#
+# * contains everything to display something on the monitor
+# * has functions to draw on a surface, the surface while be scaled and displayed on the monitor
+# * has functions to draw faster on the monitor without scaling
+#
+#####################################################
+
 import sys
 import pygame
 from pygame.locals import *

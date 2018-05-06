@@ -1,3 +1,12 @@
+#####################################################
+#
+#        player.py functionality:
+#
+# * keeps all player information
+# * updates player position based on the given direction
+#
+#####################################################
+
 class Player():
        
     def __init__(self, inX, inWidth, inHeight, inMinY, inMaxY):

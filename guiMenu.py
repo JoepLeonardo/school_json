@@ -1,3 +1,15 @@
+#####################################################
+#
+#        guiMenu.py functionality:
+#
+# * inheritance from displayOnMonitor.py
+# * contains all the head menu info
+# * handles the head menu via inputHandler.py
+# * draws everything scaled
+# * debug: keyboard esc key can end the program without shutting down
+#
+#####################################################
+
 from displayOnMonitor import DisplayOnMonitor
 from inputHandler import InputHandler
 import pygame
@@ -51,18 +63,9 @@ class GuiMenu(DisplayOnMonitor):
         # draw the head text
         self.drawTextMiddle(self.HEAD_NAME, self.HEAD_SIZE, self.HEIGHT_HEAD, False)
         # draw items
-        if (self.GAME_STATE == self.STATE_PLAY):
-            self.drawTextMiddle(self.ITEM_PLAY_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM1, True)
-            self.drawTextMiddle(self.ITEM_SETTINGS_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM2, False)
-            self.drawTextMiddle(self.ITEM_POWER_OFF_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM3, False)
-        elif (self.GAME_STATE == self.STATE_SETTINGS):
-            self.drawTextMiddle(self.ITEM_PLAY_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM1, False)
-            self.drawTextMiddle(self.ITEM_SETTINGS_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM2, True)
-            self.drawTextMiddle(self.ITEM_POWER_OFF_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM3, False)
-        else:
-            self.drawTextMiddle(self.ITEM_PLAY_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM1, False)
-            self.drawTextMiddle(self.ITEM_SETTINGS_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM2, False)
-            self.drawTextMiddle(self.ITEM_POWER_OFF_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM3, True)
+        self.drawTextMiddle(self.ITEM_PLAY_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM1, (self.GAME_STATE == self.STATE_PLAY))
+        self.drawTextMiddle(self.ITEM_SETTINGS_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM2, (self.GAME_STATE == self.STATE_SETTINGS))
+        self.drawTextMiddle(self.ITEM_POWER_OFF_NAME, self.ITEM_SIZE, self.HEIGHT_ITEM3, (self.GAME_STATE == self.STATE_POWER_OFF))       
         # show the drawings
         self.display()
         

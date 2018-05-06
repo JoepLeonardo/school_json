@@ -1,3 +1,18 @@
+#####################################################
+#
+#        pongGame.py functionality:
+#
+# * the pong game is controlled here
+# * updates ball, player and the shown field
+# * contains all the game settings except from guiSettings.py
+# * draws everything via guiPong.py
+# * plays the sound effect
+# * handles the controller input via inputHandler.py
+# * debug: keyboard esc key can end the game
+# * debug: keyboard w,s,up,down can controll the player
+#
+#####################################################
+
 from inputHandler import InputHandler
 from guiPong import GuiPong
 from player import Player
