@@ -29,7 +29,6 @@ class GuiPong(DisplayOnMonitor):
     def __init__(self):
         DisplayOnMonitor.__init__(self)
         self.halfLineX = ((int(self.GUI_WIDTH/2)) - (int(self.BORDER_WIDTH/2)))
-        print ('g4 Width: %i px, Heigth: %i px' % (self.MONITOR_WIDTH, self.MONITOR_HEIGHT))
             
     def drawHalfLine(self):
         # draw board half line
