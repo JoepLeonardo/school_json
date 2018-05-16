@@ -44,7 +44,7 @@ class PongGame():
     # Space between wall and player
     SPACE_WALL_PLAYER = 50
     # Sensitivity of the controllers (px's moved per step)
-    CONTROLLER_SENSITIVITY = 10
+    CONTROLLER_SENSITIVITY = 5
     
     # Game states
     GAME_STATE = None
