@@ -119,16 +119,16 @@ class GuiSettings(DisplayOnMonitor):
             data = self.input.getConsole()
             # PRESSED NEXT
             if (data == self.input.DATA_NEXT):
-                # increase value if possible
-                if ((newValue+factor) <= (self.ITEM_VALUE_MAX*factor)):
-                    newValue = newValue + factor
+                # decrease value if possible
+                if ((newValue-factor) >= self.ITEM_VALUE_MIN):
+                    newValue = newValue - factor
                     # draw the submenu
                     self.drawItemOverMenu(name, newValue, height)
             # PRESSED PREV
             elif (data == self.input.DATA_PREV):
-                # decrease value if possible
-                if ((newValue-factor) >= self.ITEM_VALUE_MIN):
-                    newValue = newValue - factor
+                # increase value if possible
+                if ((newValue+factor) <= (self.ITEM_VALUE_MAX*factor)):
+                    newValue = newValue + factor
                     # draw the submenu
                     self.drawItemOverMenu(name, newValue, height)
             # PRESSED SELECT
