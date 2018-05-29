@@ -21,6 +21,9 @@ from guiSettings import GuiSettings
 from pongGame import PongGame
 from subprocess import call
 
+# Hide the cursor
+pygame.mouse.set_visible(False)
+
 # Create objects here so settings stay remembered
 input = InputHandler()
 settings = GuiSettings(input)
