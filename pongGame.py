@@ -40,7 +40,7 @@ class PongGame():
     # Time before the game starts (ms)
     DELAY_BEFORE_START = 500
     DELAY_PLAYER_SCORED = 1000
-    DELAY_PLAYER_WON = 3000    
+    DELAY_PLAYER_WON = 5000    
     # Space between wall and player
     SPACE_WALL_PLAYER = 50
     # Sensitivity of the controllers (px's moved per step)

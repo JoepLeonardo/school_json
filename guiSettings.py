@@ -28,7 +28,7 @@ class GuiSettings(DisplayOnMonitor):
     ITEM_LARGE_FACTOR = 5
     # game variables
     ITEM_BALL_SPEED_NAME = 'Ball Speed'
-    ITEM_BALL_SPEED_DEFAULT = 15
+    ITEM_BALL_SPEED_DEFAULT = 10
     ITEM_BALL_SPEED_HEIGHT = (HEIGHT_ITEM*1)
     ITEM_BALL_SIZE_NAME = 'Ball Size'
     ITEM_BALL_SIZE_DEFAULT = 15
