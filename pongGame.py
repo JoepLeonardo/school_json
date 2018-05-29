@@ -108,7 +108,7 @@ class PongGame():
         ballPosY = self.fieldHeigtMiddle-(int(self.ball.getSize()/2))
         self.ball.reset(self.fieldWidthMiddle, ballPosY, self.ballDirRandomHorizontal(), self.ballDirRandomVertical(), self.ballStartSpeed)
         # Reset players
-        playerPosY = self.fieldHeigtMiddle-(int(self.player1.getHeight()/2))
+        playerPosY = self.fieldHeigtMiddle+(int(self.player1.getHeight()/2))
         self.player1.reset(playerPosY)
         self.player2.reset(playerPosY)
         # Draw the field and score
