@@ -117,10 +117,7 @@ class InputHandler():
                     
     def getController1(self):
         data = self.getControllerData(self.PIN_J0_0, self.PIN_J0_1, self.PIN_J0_2)
-        # DEBUG RETURN because only 1 controller is ready yet
-        # DEBUG RETURN because console board has a fault
-        #return data
-        return 0
+        return data
                 
     def getController2(self):
         data = self.getControllerData(self.PIN_J1_0, self.PIN_J1_1, self.PIN_J1_2)
