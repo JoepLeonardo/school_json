@@ -50,24 +50,23 @@ class GuiPong(DisplayOnMonitor):
         # draw board half line
         self.drawHalfLine()
         
-        # draw score player1
-        if (scoreP1==0):
-            self.drawScore0(self.GUI_WIDTH*1/4)
-        elif (scoreP1==1):
-            self.drawScore1(self.GUI_WIDTH*1/4)
-        elif (scoreP1==2):
-            self.drawScore2(self.GUI_WIDTH*1/4)
+        # draw score players
+        self.drawScore(scoreP1, self.GUI_WIDTH*1/4)            
+        self.drawScore(scoreP2, self.GUI_WIDTH*3/4)
+    
+    def drawScore(self, score, posX):
+        if (score==0):
+            self.drawScore0(posX)
+        elif (score==1):
+            self.drawScore1(posX)
+        elif (score==2):
+            self.drawScore2(posX)
+        elif (score==3):
+            self.drawScore3(posX)
+        elif (score==4):
+            self.drawScore4(posX)
         else:
-            self.drawScore3(self.GUI_WIDTH*1/4)
-        # draw score player2
-        if (scoreP2==0):
-            self.drawScore0(self.GUI_WIDTH*3/4)
-        elif (scoreP2==1):
-            self.drawScore1(self.GUI_WIDTH*3/4)
-        elif (scoreP2==2):
-            self.drawScore2(self.GUI_WIDTH*3/4)
-        else:
-            self.drawScore3(self.GUI_WIDTH*3/4)
+            self.drawScore5(posX)
             
     def drawScore0(self, posX):
         # draw a 0 via multiple rectangeles
@@ -100,6 +99,24 @@ class GuiPong(DisplayOnMonitor):
         self.drawRectFast(posX, (self.GUI_TOP*9/12), (self.GUI_TOP*4/6), (self.GUI_TOP*1/6))
         # vertical lines (left to right)
         self.drawRectFast((posX+self.GUI_TOP*3/6), (self.GUI_TOP*1/12), (self.GUI_TOP*1/6), (self.GUI_TOP*10/12))
+        
+    def drawScore4(self, posX):
+        # draw a 4 via multiple rectangeles
+        # horizontal lines (up to down)
+        self.drawRectFast(posX, (self.GUI_TOP*5/12), (self.GUI_TOP*4/6), (self.GUI_TOP*1/6))
+        # vertical lines (left to right)        
+        self.drawRectFast(posX, (self.GUI_TOP*1/12), (self.GUI_TOP*1/6), (self.GUI_TOP*5/12))
+        self.drawRectFast((posX+self.GUI_TOP*3/6), (self.GUI_TOP*1/12), (self.GUI_TOP*1/6), (self.GUI_TOP*10/12))
+        
+    def drawScore5(self, posX):
+        # draw a 5 via multiple rectangeles
+        # horizontal lines (up to down)
+        self.drawRectFast(posX, (self.GUI_TOP*1/12), (self.GUI_TOP*4/6), (self.GUI_TOP*1/6))
+        self.drawRectFast(posX, (self.GUI_TOP*5/12), (self.GUI_TOP*4/6), (self.GUI_TOP*1/6))
+        self.drawRectFast(posX, (self.GUI_TOP*9/12), (self.GUI_TOP*4/6), (self.GUI_TOP*1/6))
+        # vertical lines (left to right)        
+        self.drawRectFast(posX, (self.GUI_TOP*1/12), (self.GUI_TOP*1/6), (self.GUI_TOP*5/12))
+        self.drawRectFast((posX+self.GUI_TOP*3/6), (self.GUI_TOP*5/12), (self.GUI_TOP*1/6), (self.GUI_TOP*5/12))
     
     def drawObject(self, posX, posY, sizeX, sizeY):
         # draw ball
