@@ -31,8 +31,6 @@ class PongGame():
     
     # play pong loop
     PLAY_PONG = True
-    # Maximum points a player can score (guiPong display's until 3)
-    POINTS_MAX = 3
     # maxiumum framerate if programm runs fast enough
     FPS_MAX = 60
     # Ball speed increasement after hit with player
@@ -67,7 +65,7 @@ class PongGame():
     DEBUG_LOOP_START_TIME = 0
     DEBUG_LOOP_END_TIME = 0
         
-    def __init__(self, inInput, ballSpeed, ballSize, playerWidth, playerHeight):        
+    def __init__(self, inInput, maxScore, ballSpeed, ballSize, playerWidth, playerHeight):        
         pygame.init()        
         
         # create objects
@@ -80,6 +78,7 @@ class PongGame():
         self.player2 = Player(player2PosX, playerWidth, playerHeight, self.guiPong.getFieldStartY(), (self.guiPong.getFieldEndY()-playerHeight))
                 
         # create variables
+        self.playerMaxScore = maxScore
         self.ballStartSpeed = ballSpeed
         self.fieldHeigtMiddle = (((int)(self.guiPong.getFieldHeight()/2)))
         self.fieldWidthMiddle = (((int)(self.guiPong.getFieldWidth()/2)))
@@ -256,7 +255,7 @@ class PongGame():
         # Display current player and ball positions
         self.displayGame()                
         # Check if a player has max points
-        if ((self.player1.getPoints() == self.POINTS_MAX) or (self.player2.getPoints() == self.POINTS_MAX)):
+        if ((self.player1.getPoints() == self.playerMaxScore) or (self.player2.getPoints() == self.playerMaxScore)):
              # Wait to show player won
             pygame.time.wait(self.DELAY_PLAYER_WON)
             # End pong game

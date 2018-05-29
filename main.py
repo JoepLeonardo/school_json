@@ -37,7 +37,7 @@ while playGame:
     # check if game needs to start
     if (action == menu.STATE_PLAY):
         # create game
-        game = PongGame(input, settings.getBallSpeed(), settings.getBallSize(), settings.getPlayerWidth(), settings.getPlayerHeight())
+        game = PongGame(input, settings.getMaxScore(), settings.getBallSpeed(), settings.getBallSize(), settings.getPlayerWidth(), settings.getPlayerHeight())
         # play game
         game.playPong()
         # delete game
