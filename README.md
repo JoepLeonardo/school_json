@@ -2,7 +2,7 @@
 
 ### Repository info ###
 
-* Version
+* Version 1.0
 * https://bitbucket.org/pong_avans/pong2d
 
 ### Notes ###
