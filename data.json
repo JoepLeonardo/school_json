@@ -1,103 +1,123 @@
 {
   "formules": [
     {
-      "id": 045,
+      "id": 0,
       "formule": "Linear Motion",
+      "color": -12268588,
       "url": "qp1"
     },
     {
       "id": 1,
       "formule": "Constant Acceleration Motion",
+      "color": -8048231,
       "url": "qp2"
     },
     {
       "id": 2,
       "formule": "Projectile Motion",
+      "color": -4277075,
       "url": "qp3"
     },
     {
       "id": 3,
       "formule": "Force",
+      "color": -3748075,
       "url": "qp4"
     },
     {
       "id": 4,
       "formule": "Work, Power, Energy",
+      "color": -1271858,
       "url": "qp5"
     },
     {
       "id": 5,
       "formule": "Rotary Motion",
+      "color": -16337114,
       "url": "qp6"
     },
     {
       "id": 6,
       "formule": "Harmonic Motion",
+      "color": -7492089,
       "url": "qp7"
     },
     {
       "id": 7,
       "formule": "Gravity",
+      "color": -10591135,
       "url": "qp8"
     },
     {
       "id": 8,
       "formule": "Lateral and Longitudinal Waves",
+      "color": -7815587,
       "url": "qp9"
     },
     {
       "id": 9,
       "formule": "Sound Waves",
+      "color": -16255219,
       "url": "qp10"
     },
     {
       "id": 10,
       "formule": "Electrostatics",
+      "color": -10819965,
       "url": "qp11"
     },
     {
       "id": 11,
       "formule": "Direct Current",
+      "color": -3234470,
       "url": "qp12"
     },
     {
       "id": 12,
       "formule": "Magnetic Field",
+      "color": -4587004,
       "url": "qp13"
     },
     {
       "id": 13,
       "formule": "Alternating Current",
+      "color": -281049,
       "url": "qp14"
     },
     {
       "id": 14,
       "formule": "Thermodynamics",
+      "color": -8775876,
       "url": "qp15"
     },
     {
       "id": 15,
       "formule": "Hydrogen Atom",
+      "color": -5468765,
       "url": "qp16"
     },
     {
       "id": 16,
-      "formule": "Optics",
+      "formule": "-6805395",
+      "color": -14421571,
       "url": "qp17"
     },
     {
       "id": 17,
       "formule": "Modern Physics",
+      "color": -6474511,
       "url": "qp18"
     },
     {
       "id": 18,
       "formule": "Hydrostatics",
+      "color": -11601953,
       "url": "qp19"
     },
     {
       "id": 19,
       "formule": "Astronomy",
+      "color": -3053573,
       "url": "qp20"
     }
   ]
